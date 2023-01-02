@@ -1,9 +1,8 @@
-from crypt import methods
 from flask import Flask, render_template, redirect, request, session
 
 app = Flask(__name__)
 
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = b'90dca4e5e781de815882c46061ec3813f7eafb3eb63c8000316f99dda92c262d'
 
 
 @app.route("/")
