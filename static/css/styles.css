@@ -1,0 +1,19 @@
+.navbar-brand {
+  font-family: "IM Fell English SC", serif;
+}
+
+body * {
+  font-family: "Roboto", sans-serif;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.card img {
+  transition: all 2s ease-in-out;
+}
+
+.card:hover img {
+  transform: scale(1.125);
+}
