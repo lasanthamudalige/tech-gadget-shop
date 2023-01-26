@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from email_validator import validate_email, EmailNotValidError
+# from email_validator import validate_email, EmailNotValidError
 
 
 # create the extension
