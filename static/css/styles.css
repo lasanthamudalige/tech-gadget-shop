@@ -1,8 +1,11 @@
-.navbar-brand {
-  font-family: "IM Fell English SC", serif;
-}
-
 body * {
   font-family: "Roboto", sans-serif;
 }
 
+header h1 {
+  font-size: 24px;
+}
+
+.error {
+  color: red;
+}

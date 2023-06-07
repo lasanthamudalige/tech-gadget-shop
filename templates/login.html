@@ -1,27 +1,36 @@
-{% extends "layout.html" %}
-
-{% block title %}Login{% endblock %}
-
-{% block main %}
+{% extends "layout.html" %} {% block title %}Login{% endblock %} {% block main
+%}
 <div class="container col-md-4 p-5 text-center">
   <form action="/login" method="post">
     <div class="mb-3">
       <label for="InputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" name="email" id="InputEmail1" aria-describedby="email">
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        id="InputEmail1"
+        aria-describedby="email"
+      />
     </div>
     <div class="mb-3">
       <label for="InputPassword" class="form-label">Password</label>
-      <input type="password" class="form-control" name="password" id="InputPassword">
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        id="InputPassword"
+      />
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-        <p class="mt-5 mb-5">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-  <p class="mt-5 mb-5">Don't have an account? <a href="{{ url_for('sign_up') }}">Sign Up</a></p>
+
+  {% with messages = get_flashed_messages(with_categories=true) %} 
+    {% for category, message in messages %}
+      <div class="mt-5 mb-5 {{ category }}">{{ message }}</div>
+  {% endfor %} {% endwith %}
+
+  <p class="mt-5 mb-5">
+    Don't have an account? <a href="{{ url_for('sign_up') }}">Sign Up</a>
+  </p>
 </div>
 {% endblock %}

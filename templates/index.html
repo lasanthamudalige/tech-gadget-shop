@@ -1,31 +1,170 @@
-{% extends "layout.html" %}
-
-{% block title %}Exo | Exotic Book store{% endblock %}
-
-{% block main %}
-    <div id="carouselExampleSlidesOnly" class="carousel slide p-5" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="3000">
-          <img src="{{ url_for('static', filename='images/pexels-karolina-grabowska-4887152.jpg') }}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img src="{{ url_for('static', filename='images/pexels-ahsanjaya-8365831.jpg') }}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img src="{{ url_for('static', filename='images/pexels-karolina-grabowska-4887154.jpg') }}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p>
+{% extends "layout.html" %} {% block title %}Tech Haven - Your Gadget Paradise{%
+endblock %} {% block main %}
+<section id="featured-product" class="py-4">
+  <div class="container">
+    <h2 class="mb-4">Featured Products</h2>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <img
+            src="https://media.gq-magazine.co.uk/photos/63eccf7d9b06869e196c6571/master/w_1920,h_1280,c_limit/SmartSpeaker_Apple-HomePod-2--.png.jpg"
+            class="card-img-top w-50 align-self-center"
+            alt="Smartphone"
+          />
+          <div class="card-body text-center">
+            <h3 class="card-title">Smart Speaker</h3>
+            <p class="card-text">
+              A voice-controlled smart speaker with built-in virtual assistant.
+            </p>
+            <button class="btn btn-outline-dark">Add to Cart</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="products" class="py-4">
+  <div class="container">
+    <h2 class="mb-4">Popular Products</h2>
+    <div class="row">
+      <div class="col-md-3 py-2">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Smartphone</h3>
+            <p class="card-text">
+              The latest smartphone with cutting-edge features.
+            </p>
+            <button class="btn btn-outline-dark">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 py-2">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Smartphone</h3>
+            <p class="card-text">
+              The latest smartphone with cutting-edge features.
+            </p>
+            <button class="btn btn-outline-dark">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 py-2">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Laptop</h3>
+            <p class="card-text">A powerful laptop for your computing needs.</p>
+            <button class="btn btn-outline-dark">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 py-2">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Headphones</h3>
+            <p class="card-text">
+              High-quality headphones for an immersive audio experience.
+            </p>
+            <button class="btn btn-outline-dark">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 py-2">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Smartwatch</h3>
+            <p class="card-text">
+              A sleek smartwatch with various fitness tracking features.
+            </p>
+            <button class="btn btn-outline-dark">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more product cards here -->
+      <div class="col-md-3 py-2">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Tablet</h3>
+            <p class="card-text">
+              A portable tablet for work and entertainment on the go.
+            </p>
+            <button class="btn btn-outline-dark">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more product cards here -->
+    </div>
+  </div>
+</section>
+
+<section id="testimonials" class="py-4">
+  <div class="container">
+    <h2 class="mb-4">Customer Testimonials</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">
+              "I love the smartphone I purchased from Tech Haven. It has an
+              amazing camera!"
+            </p>
+            <p class="card-text">- John Doe</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more testimonial cards here -->
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="py-4">
+  <div class="container">
+    <h2 class="mb-4">Contact Us</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea
+          id="message"
+          name="message"
+          class="form-control"
+          rows="4"
+          required
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+  </div>
+</section>
+
 {% endblock %}

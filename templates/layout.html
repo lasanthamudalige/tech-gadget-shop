@@ -17,9 +17,9 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg bg-warning">
+  <nav class="navbar navbar-expand-lg bg-dark text-light p-4">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{ url_for('home') }}">Exo</a>
+      <a class="navbar-brand text-light" href="{{ url_for('home') }}">Tech Haven - Your Gadget Paradise</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,21 +28,19 @@
           <li class="nav-item">
             {% if session %}
               <li class="nav-item dropdown">
-                <a class="nav-link d-inline-flex align-items-center" href="#" role="button" aria-expanded="false"><span class="material-symbols-outlined">
-                  person
-                  </span>&nbsp; {{ session["username"] }}</a>
+                <a class="nav-link dropdown-toggle d-inline-flex align-items-center text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="material-symbols-outlined">person</span>&nbsp; {{ session["username"] }}
+                </a>
                 <ul class="dropdown-menu">
-                   <li><a class="dropdown-item" href="{{ url_for('logout') }}">Log out</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('logout') }}">Log out</a></li>
                 </ul>
               </li>
             {% else %}
-              <a class="nav-link d-inline-flex align-items-center" href="{{ url_for('login') }}"><span class="material-symbols-outlined">
-                person
-                </span>&nbsp;Login</a>
+              <a class="nav-link d-inline-flex align-items-center text-light" href="{{ url_for('login') }}">
+                <span class="material-symbols-outlined">person</span>&nbsp;Login</a>
             {% endif %}
-          </li>
           <li class="nav-item">
-            <a class="nav-link d-inline-flex align-items-center" href="#"><span class="material-symbols-outlined">
+            <a class="nav-link d-inline-flex align-items-center  text-light" href="#cart"><span class="material-symbols-outlined">
             shopping_bag</span>&nbsp; 0</a>
           </li>
         </ul>
@@ -50,10 +48,12 @@
     </div>
   </nav>
     {% block main %} {% endblock %}
-    <div class="container">
-      <footer class="py-3 my-4">
-        <hr>
-        <p class="text-center text-muted">&copy; 2023 Company, Inc</p>
+    <div class="container-fluid p-0">
+      <footer class="bg-dark text-light py-4 text-center">
+        <div class="container">
+          <p>&copy; 2023 Tech Haven. All rights reserved.</p>
+          <p><a href="#featured-product">Back to top</a></p>
+        </div>
       </footer>
     </div>
 </body>

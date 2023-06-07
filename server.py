@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-# from email_validator import validate_email, EmailNotValidError
+from email_validator import validate_email, EmailNotValidError
+import sqlalchemy
 
 
 # create the extension
@@ -15,7 +16,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 
-class User(db.Model):
+class Users(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(100), nullable=False)
@@ -23,7 +24,7 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
 
 
-class Book(db.Model):
+class Books(db.Model):
     __tablename__ = "books"
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(100), nullable=False)
@@ -49,13 +50,23 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-        # try:
-        #     validation = validate_email(email)
-        # except EmailNotValidError as e:
-        #     flash("Invalid email address.", category="error")
-        user = db.session.execute(db.select(User).filter_by(email=email)).one()
-        print(user)
-        return redirect("/")
+        try:
+            validation = validate_email(email)
+            
+            try:
+                user = db.session.execute(db.select(Users).filter_by(email=email)).one()
+
+                if user[0].password != password:
+                    flash("Invalid password.", category="error")
+                else:
+                    session["username"] = user[0].name
+                    return redirect("/")
+            
+            except sqlalchemy.exc.NoResultFound as e:
+                flash("User not found.", category="error")
+
+        except EmailNotValidError as e:
+            flash("Invalid email address.", category="error")
     return render_template("login.html")
 
 
@@ -66,8 +77,14 @@ def sign_up():
         email = request.form.get("email")
         password = request.form.get("password")
         confirmed_password = request.form.get("confirmPassword")
-        print(name, email, password, confirmed_password)
-        session["username"] = name
+        if password == confirmed_password:
+            print(name, email, password, confirmed_password)
+            new_user = Users(name= name, email=email, password=password)
+            db.session.add(new_user)
+            db.session.commit()
+        else: 
+            pass
+            # session["username"] = name
         return redirect("/")
     return render_template("sign-up.html")
 
