@@ -48,7 +48,7 @@
     </div>
   </nav>
     {% block main %} {% endblock %}
-    {% if move_footer_to_bottom %}
+    {% if login_page %}
     <div class="container-fluid p-0 fixed-bottom">
       <footer class="bg-dark text-light py-4 text-center">
         <div class="container">
@@ -60,7 +60,7 @@
     <div class="container-fluid p-0">
       <footer class="bg-dark text-light py-4 text-center">
         <div class="container">
-          <p>&copy; 2023 Tech Haven. All rights reserved.</p>
+          <p>&copy; {{year}} Tech Haven. All rights reserved.</p>
           <p><a href="#featured-product">Back to top</a></p>
         </div>
       </footer>
