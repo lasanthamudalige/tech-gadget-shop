@@ -1,24 +1,31 @@
-{% extends "layout.html" %} {% block title %}Tech Haven - Your Gadget Paradise{%
-endblock %} {% block main %}
+{% extends "layout.html" %} 
+
+{% block title %}Tech Haven - Your Gadget Paradise{%endblock %} 
+
+{% block main %}
 <section id="featured-product" class="py-4">
   <div class="container">
-    <h2 class="mb-4">Featured Products</h2>
+    <h2 class="mb-4">Featured Product</h2>
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div class="card">
-          <img
-            src="https://media.gq-magazine.co.uk/photos/63eccf7d9b06869e196c6571/master/w_1920,h_1280,c_limit/SmartSpeaker_Apple-HomePod-2--.png.jpg"
-            class="card-img-top w-50 align-self-center"
-            alt="Smartphone"
-          />
-          <div class="card-body text-center">
-            <h3 class="card-title">Smart Speaker</h3>
-            <p class="card-text">
-              A voice-controlled smart speaker with built-in virtual assistant.
-            </p>
-            <button class="btn btn-outline-dark">Add to Cart</button>
-          </div>
-        </div>
+        <a class="text-decoration-none text-dark" href="">
+          <div class="card">
+            <img
+              src="https://media.gq-magazine.co.uk/photos/63eccf7d9b06869e196c6571/master/w_1920,h_1280,c_limit/SmartSpeaker_Apple-HomePod-2--.png.jpg"
+              class="card-img-top w-50 align-self-center"
+              alt="Smartphone"
+            />
+            <div class="card-body text-center">
+              <h3 class="card-title">Smart Speakers</h3>
+              <p class="card-text">
+                Voice-controlled smart speakers with built-in virtual assistant.
+              </p>
+              {% if admin %}
+              <button class="btn btn-outline-dark">Add to Cart</button>
+              {% endif %}
+            </div>
+          </div></a
+        >
       </div>
     </div>
   </div>
@@ -29,74 +36,95 @@ endblock %} {% block main %}
     <h2 class="mb-4">Popular Products</h2>
     <div class="row">
       <div class="col-md-3 py-2">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Smartphone</h3>
-            <p class="card-text">
-              The latest smartphone with cutting-edge features.
-            </p>
-            <button class="btn btn-outline-dark">Add to Cart</button>
+        <a class="text-decoration-none text-dark" href="">
+          <div class="card py-2">
+            <img
+              src="https://images.pexels.com/photos/50614/pexels-photo-50614.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              class="card-img-top align-self-center p-2"
+              alt="Smartphone"
+            />
+            <div class="card-body">
+              <h3 class="card-title">Smartphones</h3>
+              <p class="card-text">
+                The latest smartphones with cutting-edge features.
+              </p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <div class="col-md-3 py-2">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Smartphone</h3>
-            <p class="card-text">
-              The latest smartphone with cutting-edge features.
-            </p>
-            <button class="btn btn-outline-dark">Add to Cart</button>
+        <a class="text-decoration-none text-dark" href="">
+          <div class="card">
+            <img
+              src="https://images.pexels.com/photos/812264/pexels-photo-812264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              class="card-img-top align-self-center p-2"
+              alt="Laptop"
+            />
+            <div class="card-body">
+              <h3 class="card-title">Laptops</h3>
+              <p class="card-text">
+                A powerful laptops for your computing needs.
+              </p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <div class="col-md-3 py-2">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Laptop</h3>
-            <p class="card-text">A powerful laptop for your computing needs.</p>
-            <button class="btn btn-outline-dark">Add to Cart</button>
+        <a class="text-decoration-none text-dark" href="">
+          <div class="card">
+            <img
+              src="https://images.pexels.com/photos/815494/pexels-photo-815494.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              class="card-img-top align-self-center p-2"
+              alt="Headphones"
+            />
+            <div class="card-body">
+              <h3 class="card-title">Headphones</h3>
+              <p class="card-text">
+                High-quality headphones for an immersive audio experience.
+              </p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <div class="col-md-3 py-2">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Headphones</h3>
-            <p class="card-text">
-              High-quality headphones for an immersive audio experience.
-            </p>
-            <button class="btn btn-outline-dark">Add to Cart</button>
+        <a class="text-decoration-none text-dark" href="">
+          <div class="card">
+            <img
+              src="https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              class="card-img-top align-self-center p-2"
+              alt="Smartwatch"
+            />
+            <div class="card-body">
+              <h3 class="card-title">Smartwatches</h3>
+              <p class="card-text">
+                Sleek smartwatchs with various fitness tracking features.
+              </p>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 py-2">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Smartwatch</h3>
-            <p class="card-text">
-              A sleek smartwatch with various fitness tracking features.
-            </p>
-            <button class="btn btn-outline-dark">Add to Cart</button>
-          </div>
-        </div>
+        </a>
       </div>
 
       <!-- Add more product cards here -->
       <div class="col-md-3 py-2">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Tablet</h3>
-            <p class="card-text">
-              A portable tablet for work and entertainment on the go.
-            </p>
-            <button class="btn btn-outline-dark">Add to Cart</button>
+        <a class="text-decoration-none text-dark" href="">
+          <div class="card">
+            <img
+              src="https://images.pexels.com/photos/221185/pexels-photo-221185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              class="card-img-top align-self-center p-2"
+              alt="Smartphone"
+            />
+            <div class="card-body">
+              <h3 class="card-title">Tablets</h3>
+              <p class="card-text">
+                Portable tablets for work and entertainment on the go.
+              </p>
+              <button class="btn btn-outline-dark">Add to Cart</button>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <!-- Add more product cards here -->
