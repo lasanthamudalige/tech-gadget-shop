@@ -6,28 +6,29 @@
 <div class="container col-md-4 p-5 text-center">
   <form action="/signup" method="post">
     <div class="mb-3">
-      <label for="InputName" class="form-label">Name</label>
-      <input type="text" class="form-control" name="name" id="InputName" aria-describedby="name">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" name="name" id="name" aria-describedby="name">
     </div>
     <div class="mb-3">
-      <label for="InputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" name="email" id="InputEmail1" aria-describedby="emailHelp">
+      <label for="inputEmail1" class="form-label">Email address</label>
+      <input type="email" class="form-control" name="email" id="inputEmail1" aria-describedby="emailHelp">
     </div>
     <div class="mb-3">
-      <label for="InputPassword" class="form-label">Password</label>
-      <input type="password" class="form-control" name="password" id="InputPassword">
+      <label for="inputPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" name="password" id="inputPassword">
     </div>
     <div class="mb-3">
-      <label for="ConfirmPassword1" class="form-label">Confirm Password</label>
-      <input type="password" class="form-control" name="confirmPassword" id="ConfirmPassword1">
+      <label for="confirmPassword1" class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" name="confirmPassword" id="confirmPassword1">
     </div>
-    <button type="submit" class="btn btn-primary">sign up</button>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
   </form>
   
   {% with messages = get_flashed_messages(with_categories=true) %} 
     {% for category, message in messages %}
       <div class="mt-5 mb-5 {{ category }}">{{ message }}</div>
-  {% endfor %} {% endwith %}
+    {% endfor %}
+  {% endwith %}
 </div>
 
 {% endblock %}

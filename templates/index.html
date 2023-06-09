@@ -1,27 +1,22 @@
-{% extends "layout.html" %} {% block title %}Tech Haven - Your Gadget
-Paradise{%endblock %} {% block main %}
+{% extends "layout.html" %}
+{% block title %}Tech Haven - Your Gadget Paradise{% endblock %}
+{% block main %}
 <section id="featured-product" class="py-4">
   <div class="container">
-    <h2 class="mb-4">Featured Product</h2>
+    <h2 class="mb-4">Featured Products</h2>
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <a class="text-decoration-none text-dark" href="">
-          <div class="card">
-            <img
-              src="https://media.gq-magazine.co.uk/photos/63eccf7d9b06869e196c6571/master/w_1920,h_1280,c_limit/SmartSpeaker_Apple-HomePod-2--.png.jpg"
-              class="card-img-top w-50 align-self-center"
-              alt="Smartphone"
-            />
+        {% for item in featured_products %}
+          <div class="card py-4">
+            <img src="{{ item.img_url}}" class="card-img-top w-50 align-self-center" alt="{{ item.name }}">
             <div class="card-body text-center">
-              <h3 class="card-title">Smart Speaker Pro</h3>
-              <p class="card-text">
-                Experience the future of home entertainment with our voice-controlled smart speakers, combining convenience, immersive sound, and seamless control over music, podcasts, and smart home devices, revolutionizing your home interaction.
-              </p>
-              <h4 class="card-price">$199.99</h4>
+              <h3 class="card-title">{{ item.name }}</h3>
+              <p class="card-text">{{ item.description }}</p>
+              <h4 class="card-price">${{ item.price }}</h4>
               <button class="btn btn-outline-dark">Add to Cart</button>
             </div>
           </div>
-        </a>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -31,113 +26,19 @@ Paradise{%endblock %} {% block main %}
   <div class="container">
     <h2 class="mb-4">Popular Products</h2>
     <div class="row">
-      <div class="col-md-3 py-2">
-        <a class="text-decoration-none text-dark" href="">
-          <div class="card py-2">
-            <img
-              src="https://images.pexels.com/photos/50614/pexels-photo-50614.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="card-img-top align-self-center p-2"
-              alt="Smartphone"
-            />
-            <div class="card-body">
-              <h3 class="card-title">InfinityEdge Smartphones</h3>
-              <p class="card-text">
-                Explore limitless possibilities with edge-to-edge displays and
-                powerful performance.
-              </p>
-              <h4 class="card-price">$899.99</h4>
-              <button class="btn btn-outline-dark">Add to Cart</button>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-md-3 py-2">
-        <a class="text-decoration-none text-dark" href="">
+      {% for item in popular_products %}
+        <div class="col-md-3 py-2">
           <div class="card">
-            <img
-              src="https://images.pexels.com/photos/812264/pexels-photo-812264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="card-img-top align-self-center p-2"
-              alt="Laptop"
-            />
+            <img src="{{ item.img_url}}" class="card-img-top align-self-center p-2" alt="Smartphone">
             <div class="card-body">
-              <h3 class="card-title">Gaming Laptop Elite</h3>
-              <p class="card-text">
-                Elevate your gaming experience with seamless gameplay and
-                immersive graphics.
-              </p>
-              <h4 class="card-price">$1499.99</h4>
+              <h3 class="card-title">{{ item.name }}</h3>
+              <p class="card-text">{{ item.description }}</p>
+              <h4 class="card-price">${{ item.price }}</h4>
               <button class="btn btn-outline-dark">Add to Cart</button>
             </div>
           </div>
-        </a>
-      </div>
-
-      <div class="col-md-3 py-2">
-        <a class="text-decoration-none text-dark" href="">
-          <div class="card">
-            <img
-              src="https://images.pexels.com/photos/815494/pexels-photo-815494.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="card-img-top align-self-center p-2"
-              alt="Headphones"
-            />
-            <div class="card-body">
-              <h3 class="card-title">Wireless Noise-Canceling Headphones</h3>
-              <p class="card-text">
-                Immerse yourself in pristine sound with cutting-edge technology
-                and superior comfort.
-              </p>
-              <h4 class="card-price">$249.99</h4>
-              <button class="btn btn-outline-dark">Add to Cart</button>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-md-3 py-2">
-        <a class="text-decoration-none text-dark" href="">
-          <div class="card">
-            <img
-              src="https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="card-img-top align-self-center p-2"
-              alt="Smartwatch"
-            />
-            <div class="card-body">
-              <h3 class="card-title">Fitness Smartwatch Plus</h3>
-              <p class="card-text">
-                Stay active and track your fitness goals with a sleek smartwatch
-                that keeps you connected and motivated.
-              </p>
-              <h4 class="card-price">$129.99</h4>
-              <button class="btn btn-outline-dark">Add to Cart</button>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <!-- Add more product cards here -->
-      <div class="col-md-3 py-2">
-        <a class="text-decoration-none text-dark" href="">
-          <div class="card">
-            <img
-              src="https://images.pexels.com/photos/221185/pexels-photo-221185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="card-img-top align-self-center p-2"
-              alt="Smartphone"
-            />
-            <div class="card-body">
-              <h3 class="card-title">Ultra-Slim Tablet Pro</h3>
-              <p class="card-text">
-                Experience style and functionality on the go with a portable
-                tablet that offers a stunning display and powerful performance.
-              </p>
-              <h4 class="card-price">$399.99</h4>
-              <button class="btn btn-outline-dark">Add to Cart</button>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <!-- Add more product cards here -->
+        </div>
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -149,19 +50,41 @@ Paradise{%endblock %} {% block main %}
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <p class="card-text">
-              "I love the smartphone I purchased from Tech Haven. It has an
-              amazing camera!"
-            </p>
-            <p class="card-text">- John Doe</p>
+            <p class="card-text">"I love the smartphone I purchased from Tech Haven. It has an amazing camera!"</p>
+            <footer class="blockquote-footer">John Smith</footer>
           </div>
         </div>
       </div>
-
-      <!-- Add more testimonial cards here -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">"The gaming laptop I bought from Tech Haven exceeded my expectations. It runs all the latest games smoothly."</p>
+            <footer class="blockquote-footer">Emily Johnson</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">"The wireless noise-canceling headphones from Tech Haven are fantastic. They provide immersive sound and block out all the noise around me."</p>
+            <footer class="blockquote-footer">Michael Anderson</footer>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">"I'm impressed with the fitness smartwatch I purchased from Tech Haven. It helps me track my workouts and stay motivated."</p>
+            <footer class="blockquote-footer">Sarah Thompson</footer>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
 
 <section id="contact" class="py-4">
   <div class="container">
@@ -169,35 +92,17 @@ Paradise{%endblock %} {% block main %}
     <form>
       <div class="form-group">
         <label for="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          class="form-control"
-          required
-        />
+        <input type="text" id="name" name="name" class="form-control" required>
       </div>
 
       <div class="form-group">
         <label for="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          class="form-control"
-          required
-        />
+        <input type="email" id="email" name="email" class="form-control" required>
       </div>
 
       <div class="form-group">
         <label for="message">Message:</label>
-        <textarea
-          id="message"
-          name="message"
-          class="form-control"
-          rows="4"
-          required
-        ></textarea>
+        <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
       </div>
 
       <button type="submit" class="btn btn-secondary">Submit</button>

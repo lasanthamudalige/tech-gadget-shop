@@ -1,7 +1,70 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
+{% block title %}Admin{% endblock %}
+{% block main %}
+<section id="featured-product" class="py-4">
+  <div class="container">
+    <h2 class="mb-4">Featured Product</h2>
+    <div class="row">
+      {% for item in featured_products %}
+      <div class="col-md-6 offset-md-3">
+        <div class="card py-4">
+          <img src="{{ item.img_url}}" class="card-img-top w-50 align-self-center" alt="{{ item.name }}">
+          <div class="card-body text-center">
+            <h3 class="card-title">{{ item.name }}</h3>
+            <p class="card-text">{{ item.description }}</p>
+            <h4 class="card-price">${{ item.price }}</h4>
+            <a class="btn btn-outline-dark" href="{{ url_for('edit_item', item_type='featured', item_id=item.id) }}">Edit</a>
+            <a class="btn btn-outline-dark" href="{{ url_for('delete_item', item_type='featured', item_id=item.id) }}">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="col-md-3">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column justify-content-end">
+            <h4 class="card-text text-center justify-content-between">Add new item</h4>
+            <a class="btn btn-outline-dark" href="{{ url_for('add_item', item_type='featured') }}"><span class="material-symbols-outlined">
+              add
+              </span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-{% block title %}Admin{% endblock %} 
 
-{% block main%}
-<h1>Hello World!</h1>
+
+<section id="products" class="py-4">
+  <div class="container">
+    <h2 class="mb-4">Popular Products</h2>
+    <div class="row">
+      {% for item in popular_products %}
+        <div class="col-md-3 py-2">
+          <div class="card">
+            <img src="{{ item.img_url}}" class="card-img-top align-self-center p-2" alt="{{ item.name }}">
+            <div class="card-body">
+              <h3 class="card-title">{{ item.name }}</h3>
+              <p class="card-text">{{ item.description }}</p>
+              <h4 class="card-price">${{ item.price }}</h4>
+              <a class="btn btn-outline-dark" href="{{ url_for('edit_item', item_type='popular', item_id=item.id) }}">Edit</a>
+              <a class="btn btn-outline-dark" href="{{ url_for('delete_item', item_type='popular', item_id=item.id) }}">Delete</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      <div class="col-md-3">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column justify-content-end">
+            <h4 class="card-text text-center">Add new item</h4>
+            <a class="btn btn-outline-dark" href="{{ url_for('add_item', item_type='popular') }}"><span class="material-symbols-outlined">
+              add
+              </span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}

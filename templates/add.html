@@ -1,0 +1,33 @@
+{% extends "layout.html" %} 
+
+{% block title %}Add{% endblock %} 
+
+{% block main%}
+    <div class="container col-md-4 p-5 text-center">
+        <h2 class="p-4">Add item</h2>
+        <form action="{{ url_for('add_item', item_type=item_type) }}" method="post">
+            <div class="mb-3">
+              <label for="ItemName" class="form-label">Item Name</label>
+              <input type="text" class="form-control" name="item-name" id="ItemName" aria-describedby="Input for product name" required>
+            </div>
+            <div class="mb-3">
+              <label for="InputImage" class="form-label">Item Image</label>
+              <input type="text" class="form-control" name="item-image" id="InputImage" aria-describedby="Input for product image" required>
+            </div>
+            <div class="mb-3">
+              <label for="InputPrice" class="form-label">Item Price</label>
+              <input type="number" min="0" class="form-control" name="item-price" id="InputPrice" aria-describedby="Input for product price" required>
+            </div>
+            <div class="mb-3">
+              <label for="InputDescription" class="form-label">Item Description</label>
+              <textarea name="item-description" class="form-control" id="InputDescription" rows="3" aria-describedby="Input for product description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Item</button>
+          </form>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% for category, message in messages %}
+            <div class="my-5 pb-5 {{ category }}">{{ message }}</div>
+        {% endfor %} {% endwith %}
+  </div>
+{% endblock %}
