@@ -4,6 +4,7 @@ from time import sleep
 from flask import Flask, render_template, redirect, request, session, flash, abort
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 from email_validator import validate_email, EmailNotValidError
 
 
@@ -154,7 +155,7 @@ def login():
 
             if user == None:
                 flash("User not found.", category="error")
-            elif user.password != password:
+            elif not check_password_hash(user.password, password):
                 flash("Invalid password.", category="error")
             else:
                 login_user(user)
@@ -183,7 +184,8 @@ def sign_up():
                 user = User.query.filter_by(email=email).first()
 
                 if user == None:
-                    new_user = User(name=name, email=email, password=password)
+                    salted_hashed_password = generate_password_hash(password=password, salt_length=16)
+                    new_user = User(name=name, email=email, password=salted_hashed_password)
                     db.session.add(new_user)
                     db.session.commit()
 
@@ -206,7 +208,6 @@ def sign_up():
 @login_required
 def logout():
     logout_user()
-
     return redirect("/")
 
 
