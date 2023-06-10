@@ -65,9 +65,9 @@ def add_default_data():
             )
         db.session.add(featured_item1)
 
-    if not PopularProduct.query.filter_by(name="InfinityEdge Smartphones").first():
+    if not PopularProduct.query.filter_by(name="InfinityEdge Smartphone").first():
         popular_item1 = PopularProduct(
-            name="InfinityEdge Smartphones",
+            name="InfinityEdge Smartphone",
             description="Explore limitless possibilities with edge-to-edge displays and powerful performance.", 
             price=899.99, 
             img_url="https://images.pexels.com/photos/207455/pexels-photo-207455.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -83,9 +83,9 @@ def add_default_data():
             )
         db.session.add(popular_item2)
         
-    if not PopularProduct.query.filter_by(name="Wireless Noise-Canceling Headphones").first():
+    if not PopularProduct.query.filter_by(name="Wireless Noise-Canceling Headphone").first():
         popular_item3 = PopularProduct(
-            name="Wireless Noise-Canceling Headphones", 
+            name="Wireless Noise-Canceling Headphone", 
             description="Immerse yourself in pristine sound with cutting-edge technology and superior comfort.", 
             price=249.99, 
             img_url="https://images.pexels.com/photos/7241360/pexels-photo-7241360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -114,9 +114,9 @@ def add_default_data():
 
 
 # Run once to create a db
-# with app.app_context():  # From SQLAlchemy 3.0
-#     db.create_all()
-#     add_default_data()
+with app.app_context():  # From SQLAlchemy 3.0
+    db.create_all()
+    add_default_data()
 
 
 app.secret_key = b'90dca4e5e781de815882c46061ec3813f7eafb3eb63c8000316f99dda92c262d'
