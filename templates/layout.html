@@ -42,9 +42,31 @@
                 <span class="material-symbols-outlined">person</span>&nbsp;Login</a>
             {% endif %}
           {% if not admin %}
-            <li class="nav-item">
-              <a class="nav-link d-inline-flex align-items-center  text-light" href="#cart"><span class="material-symbols-outlined">
-              shopping_bag</span>&nbsp; 0</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link d-inline-flex align-items-center text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined">shopping_bag</span>&nbsp; {{ total_items }}
+              </a>                     
+              <ul class="dropdown-menu dropdown-menu-end border-dark">
+                {% if cart %}
+                  {% for item in cart %}
+                    <div class="card mb-1 border-0" style="width: 300px;">
+                      <div class="row g-0 align-items-center ps-2 pe-2">
+                        <div class="col-md-4">
+                          <img src="{{ item.image }}" class="img-fluid rounded-start" alt="{{ item.name }}">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <p class="card-text">{{ item.name }} <br> {{ item.quantity }} ✕ {{ item.price }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+                <div class="text-center">
+                  <a class="btn btn-outline-dark text-center" href="">Go Pay</a>
+                </div>
+              </ul>
             </li>
           {% endif %}
         </ul>

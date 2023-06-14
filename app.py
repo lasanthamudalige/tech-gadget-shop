@@ -1,6 +1,5 @@
 import datetime
 from functools import wraps
-from time import sleep
 from flask import Flask, render_template, redirect, request, session, flash, abort
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +17,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///techshop.db"
 # initialize the app with the extension
 db.init_app(app)
+
 
 # Flask login
 login_manager = LoginManager()
@@ -136,15 +136,31 @@ def admin_only(f):
 def home():
     featured_products = FeaturedProduct.query.all()
     popular_products = PopularProduct.query.all()
+
+    cart = None
+    total_items = 0  
+    if "cart" in session:
+      cart = session["cart"]
+      for item in cart:
+        total_items += item["quantity"]
+      
     return render_template("index.html", 
                            year=datetime.date.today().year, 
                            current_user=current_user,
                            featured_products=featured_products, 
-                           popular_products=popular_products)
+                           popular_products=popular_products, 
+                           total_items=total_items,
+                           cart=cart)
 
 
 @app.route("/login", methods=["Get","POST"])
 def login():
+
+    total_items = 0  
+    if "cart" in session:
+      for item in session["cart"]:
+        total_items += item["quantity"]
+
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
@@ -165,11 +181,17 @@ def login():
         except EmailNotValidError as e:
             flash("Invalid email address.", category="error")
 
-    return render_template("login.html", login_page=True, year=datetime.date.today().year, current_user=current_user)
+    return render_template("login.html", login_page=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items)
 
 
 @app.route("/signup", methods=["Get", "POST"])
 def sign_up():
+
+    total_items = 0  
+    if "cart" in session:
+      for item in session["cart"]:
+        total_items += item["quantity"]
+
     if request.method == "POST":
         name = request.form.get("name")
         email = request.form.get("email")
@@ -201,7 +223,7 @@ def sign_up():
         except EmailNotValidError as e:
             flash("Invalid email address.", category="error")
  
-    return render_template("sign-up.html", login_page=True, year=datetime.date.today().year, current_user=current_user)
+    return render_template("sign-up.html", login_page=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items)
 
 
 @app.route("/logout")
@@ -209,6 +231,36 @@ def sign_up():
 def logout():
     logout_user()
     return redirect("/")
+
+
+@app.route("/add-to-cart/<item_type>/<item_id>")
+def add_to_cart(item_type, item_id):
+    if item_type == "featured":
+        product = FeaturedProduct.query.filter_by(id=item_id).first()
+    elif item_type == "popular":
+        product = PopularProduct.query.filter_by(id=item_id).first()
+
+    if product:
+        if "cart" not in session:
+            session["cart"] = []
+            session["cart"].append({"name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
+        else:
+            cart = session["cart"] 
+            found = False
+            for item in session["cart"]:
+                if item["name"] == product.name:
+                    found = True
+                    new_quantity = item["quantity"] + 1
+                    item.update({"quantity" : new_quantity})
+            
+            if not found:
+                cart.append({"name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
+            session["cart"] = cart
+        
+        print(session["cart"])
+
+    return redirect("/")
+
 
 
 @app.route("/admin")

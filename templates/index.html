@@ -13,7 +13,7 @@
               <h3 class="card-title">{{ item.name }}</h3>
               <p class="card-text">{{ item.description }}</p>
               <h4 class="card-price">${{ item.price }}</h4>
-              <button class="btn btn-outline-dark">Add to Cart</button>
+              <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_type='featured', item_id=item.id) }}">Add to Cart</a>
             </div>
           </div>
         {% endfor %}
@@ -34,7 +34,7 @@
               <h3 class="card-title">{{ item.name }}</h3>
               <p class="card-text">{{ item.description }}</p>
               <h4 class="card-price">${{ item.price }}</h4>
-              <button class="btn btn-outline-dark">Add to Cart</button>
+              <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_type='popular', item_id=item.id) }}">Add to Cart</a>
             </div>
           </div>
         </div>
