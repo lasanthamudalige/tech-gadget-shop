@@ -6,16 +6,18 @@
     <h2 class="mb-4">Featured Products</h2>
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        {% for item in featured_products %}
-          <div class="card py-4">
-            <img src="{{ item.img_url}}" class="card-img-top w-50 align-self-center" alt="{{ item.name }}">
-            <div class="card-body text-center">
-              <h3 class="card-title">{{ item.name }}</h3>
-              <p class="card-text">{{ item.description }}</p>
-              <h4 class="card-price">${{ item.price }}</h4>
-              <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_type='featured', item_id=item.id) }}">Add to Cart</a>
+        {% for item in items %}
+          {% if item.category == "featured" %}
+            <div class="card py-4">
+              <img src="{{ item.img_url}}" class="card-img-top w-50 align-self-center" alt="{{ item.name }}">
+              <div class="card-body text-center">
+                <h3 class="card-title">{{ item.name }}</h3>
+                <p class="card-text">{{ item.description }}</p>
+                <h4 class="card-price">${{ item.price }}</h4>
+                <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_type='featured', item_id=item.id) }}">Add to Cart</a>
+              </div>
             </div>
-          </div>
+          {% endif %}
         {% endfor %}
       </div>
     </div>
@@ -26,18 +28,20 @@
   <div class="container">
     <h2 class="mb-4">Popular Products</h2>
     <div class="row">
-      {% for item in popular_products %}
-        <div class="col-md-3 py-2">
-          <div class="card">
-            <img src="{{ item.img_url}}" class="card-img-top align-self-center p-2" alt="Smartphone">
-            <div class="card-body">
-              <h3 class="card-title">{{ item.name }}</h3>
-              <p class="card-text">{{ item.description }}</p>
-              <h4 class="card-price">${{ item.price }}</h4>
-              <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_type='popular', item_id=item.id) }}">Add to Cart</a>
+      {% for item in items %}
+        {% if item.category == "popular" %}
+          <div class="col-md-3 py-2">
+            <div class="card">
+              <img src="{{ item.img_url}}" class="card-img-top align-self-center p-2" alt="Smartphone">
+              <div class="card-body">
+                <h3 class="card-title">{{ item.name }}</h3>
+                <p class="card-text">{{ item.description }}</p>
+                <h4 class="card-price">${{ item.price }}</h4>
+                <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_type='popular', item_id=item.id) }}">Add to Cart</a>
+              </div>
             </div>
           </div>
-        </div>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
