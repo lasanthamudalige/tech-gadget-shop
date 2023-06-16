@@ -120,11 +120,11 @@ def add_default_data():
 
 
 # Run once to create a db
-with app.app_context():  # From SQLAlchemy 3.0
-    db.create_all()
-    add_default_data()
+# with app.app_context():  # From SQLAlchemy 3.0
+#     db.create_all()
+#     add_default_data()
 
-
+ 
 app.secret_key = b'90dca4e5e781de815882c46061ec3813f7eafb3eb63c8000316f99dda92c262d'
 
 
