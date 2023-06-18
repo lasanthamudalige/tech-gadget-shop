@@ -1,17 +1,17 @@
-import datetime
-from functools import wraps
 from flask import Flask, render_template, redirect, request, session, flash, abort
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+from functools import wraps
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_validator import validate_email, EmailNotValidError
-
-
 import stripe
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 # This is your test secret API key.
-stripe.api_key = 'sk_test_51NJE4gCfuwoPTyeU5UGTinWQx4gLmrgRnIv749KmVOOK6yooW9YF9MVHIYDu4806b4cyrtflcBgIIp5rL4ZAoXsk00tQzJmRY7'
-
-
+stripe.api_key = os.environ.get("STRIPE_APIT_KEY")
 
 
 # create the app
@@ -143,7 +143,8 @@ def home():
     items = Item.query.all()
 
     cart = None
-    total_items = 0  
+    total_items = 0 
+
     if "cart" in session:
       cart = session["cart"]
       for item in cart:
@@ -162,7 +163,8 @@ def login():
 
     cart = None
     total_items = 0  
-    if "cart" in session:
+
+    if session["cart"]:
       cart = session["cart"]
       for item in cart:
         total_items += item["quantity"]
@@ -187,7 +189,7 @@ def login():
         except EmailNotValidError as e:
             flash("Invalid email address.", category="error")
 
-    return render_template("login.html", login_page=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items, cart=cart)
+    return render_template("login.html", less_content=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items, cart=cart)
 
 
 @app.route("/signup", methods=["Get", "POST"])
@@ -195,7 +197,8 @@ def sign_up():
 
     cart = None
     total_items = 0  
-    if "cart" in session:
+
+    if session["cart"]:
       cart = session["cart"]
       for item in cart:
         total_items += item["quantity"]
@@ -231,7 +234,7 @@ def sign_up():
         except EmailNotValidError as e:
             flash("Invalid email address.", category="error")
  
-    return render_template("sign-up.html", login_page=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items, cart=cart)
+    return render_template("sign-up.html", less_content=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items, cart=cart)
 
 
 @app.route("/logout")
@@ -251,81 +254,67 @@ def admin():
     return render_template("admin.html", year=datetime.date.today().year, current_user=current_user,items=items, admin=True)
 
 
-@app.route("/add/<item_type>", methods=["Get", "POST"])
+@app.route("/add_item", methods=["Get", "POST"])
 @login_required
 @admin_only
-def add_item(item_type):
+def add_item():
     if request.method == "POST":
+        item_type = request.form.get("product-type")
         item_name = request.form.get("item-name")
         item_image_url = request.form.get("item-image")
         item_price = float(request.form.get("item-price"))
         item_description = request.form.get("item-description")
-
-        if item_name == "" or item_image_url == "" or item_price == "" or item_description == "":
+        print(item_type)
+        
+        if item_type == "" or item_name == "" or item_image_url == "" or item_price == "" or item_description == "":
             flash("Please fill all the input fields.", "error")
         else:
-            if item_type == "featured":
+            if item_type == "Featured Product":
                 new_item = Item(name=item_name, category="featured" , img_url=item_image_url, price=item_price, description=item_description)
-                db.session.add(new_item)
-                db.session.commit()
 
-            elif item_type == "popular":
+            elif item_type == "Popular Product":
                 new_item = Item(name=item_name, category="popular" , img_url=item_image_url, price=item_price, description=item_description)
-                db.session.add(new_item)
-                db.session.commit()
+
+            db.session.add(new_item)
+            db.session.commit()
 
             session.pop('_flashes', None)
             return redirect("/admin")
 
-    return render_template("add.html", login_page=True, year=datetime.date.today().year, current_user=current_user, admin=True, item_type=item_type)
+    # If request method is 'GET'
+    return render_template("add.html", login_page=True, year=datetime.date.today().year, current_user=current_user, less_content=True)
 
 
-@app.route("/edit/<item_type>/<item_id>", methods=["Get", "POST"])
+@app.route("/edit/<item_id>", methods=["Get", "POST"])
 @login_required
 @admin_only
-def edit_item(item_type, item_id):
+def edit_item(item_id):
     if request.method == "POST":
+        item_type = request.form.get("product-type")
         item_name = request.form.get("item-name")
         item_image_url = request.form.get("item-image")
         item_price = float(request.form.get("item-price"))
         item_description = request.form.get("item-description")
 
-        if item_name == "" or item_image_url == "" or item_price == "" or item_description == "":
+        if item_type == "" or item_name == "" or item_image_url == "" or item_price == "" or item_description == "":
             flash("Please fill all the input fields.", "error")
         else:
-            if item_type == "featured":
-                found_item = Item.query.filter_by(id=item_id).first()
+            found_item = Item.query.filter_by(id=item_id).first()
                 
-                found_item.name = item_name
-                found_item.img_url = item_image_url
-                found_item.price = item_price
-                found_item.description = item_description
-                db.session.commit()
+            found_item.name = item_name
+            found_item.img_url = item_image_url
+            found_item.price = item_price
+            found_item.description = item_description
+            db.session.commit()
                 
-                flash("Item successfully update.", "message")
-
-            elif item_type == "popular":
-                found_item = Item.query.filter_by(id=item_id).first()
-                
-                found_item.name = item_name
-                found_item.img_url = item_image_url
-                found_item.price = item_price
-                found_item.description = item_description
-                db.session.commit()
-                
-                flash("Item successfully update.", "message")
+            flash("Item successfully update.", "message")
 
             session.pop('_flashes', None)
             return redirect("/admin")
     
     # For 'GET' requests
-    if item_type == "featured":
-        found_item = Item.query.filter_by(id=item_id).first()
-        return render_template("edit.html", login_page=True, year=datetime.date.today().year, current_user=current_user, admin=True, item=found_item, item_type=item_type)
-        
-    elif item_type == "popular":
-        found_item = Item.query.filter_by(id=item_id).first()
-        return render_template("edit.html", login_page=True, year=datetime.date.today().year, current_user=current_user, admin=True, item=found_item, item_type=item_type)
+    found_item = Item.query.filter_by(id=item_id).first()
+    return render_template("edit.html", less_content=True, year=datetime.date.today().year, current_user=current_user, admin=True, item=found_item)
 
     
 @app.route("/delete/<item_id>", methods=["Get", "POST"])
@@ -342,15 +331,12 @@ def delete_item(item_id):
     return redirect("/admin")
 
 
-@app.route("/add-to-cart/<item_type>/<item_id>")
-def add_to_cart(item_type, item_id):
+@app.route("/add-to-cart/<item_id>/<checkout>")
+def add_to_cart(item_id, checkout):
     product = Item.query.filter_by(id=item_id).first()
 
     if product:
-        if "cart" not in session:
-            session["cart"] = []
-            session["cart"].append({"name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
-        else:
+        if "cart" in session:
             cart = session["cart"] 
             found = False
             for item in session["cart"]:
@@ -360,12 +346,42 @@ def add_to_cart(item_type, item_id):
                     item.update({"quantity" : new_quantity})
             
             if not found:
-                cart.append({"name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
+                cart.append({"id": product.id, "name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
             session["cart"] = cart
         
+        else: 
+            session["cart"] = []
+            session["cart"].append({"id": product.id, "name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
+        
         print(session["cart"])
+    print(checkout)
 
-    return redirect("/")
+    if checkout == "True":
+        return redirect("/checkout")
+    else:
+        return redirect("/")
+
+
+@app.route("/remove-from-cart/<item_id>")
+def remove_from_cart(item_id):
+    product = Item.query.filter_by(id=item_id).first()
+
+    if product:
+        if "cart" in session:
+            cart = session["cart"] 
+            for item in session["cart"]:
+                if item["name"] == product.name:
+                    quantity = item["quantity"]
+                    if quantity == 1:
+                        cart.remove(item)
+                    else: 
+                        new_quantity = item["quantity"] - 1
+                        item.update({"quantity" : new_quantity})
+
+                session["cart"] = cart
+        
+    return redirect("/checkout")    
+
 
 
 @app.route("/checkout")
@@ -380,28 +396,50 @@ def checkout():
         total_items += item["quantity"]
         total_amount += item["quantity"] * item["price"]
 
-    return render_template("checkout.html",total_items=total_items, cart=cart, total_amount=round(total_amount, 2))
+    return render_template("checkout.html", year=datetime.date.today().year ,less_content=True ,total_items=total_items, cart=cart, total_amount=round(total_amount, 2), date=datetime.date.today())
 
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
     try:
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': '{{100}}',
-                    'quantity': 1,
+        line_items = []
+        for item in session["cart"]:
+            line_item = {
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {"name": item["name"], 
+                                     "images": [item["image"]]
+                                     },
+                    "unit_amount_decimal": item["price"] * 100,
+                    # "custom_unit_amount": 1,
                 },
-            ],
+                "quantity": item["quantity"],
+            }
+            line_items.append(line_item)
+
+        checkout_session = stripe.checkout.Session.create(
+            line_items=line_items,
             mode='payment',
-            success_url="www.google.com",
-            
+            billing_address_collection= "required",
+            success_url="http://127.0.0.1:5000/success",
+            cancel_url= "http://127.0.0.1:5000/"
         )
     except Exception as e:
         return str(e)
 
     return redirect(checkout_session.url, code=303)
 
+
+@app.route("/success")
+def success():
+    # Update cart to None to remove everything in it
+    cart = session["cart"]
+    cart = None
+    # Assign cart to None
+    session["cart"] = cart
+    total_items = 0  
+    
+    return render_template("success.html", less_content=True, cart=cart, total_items=total_items)
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=5000 ,debug=True)

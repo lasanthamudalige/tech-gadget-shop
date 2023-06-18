@@ -40,13 +40,15 @@
               <a class="nav-link d-inline-flex align-items-center text-light" href="{{ url_for('login') }}">
                 <span class="material-symbols-outlined">person</span>&nbsp;Login</a>
             {% endif %}
+          <!-- Show cart if the user is not admin -->
           {% if not admin %}
             <li class="nav-item dropdown">
               <a class="nav-link d-inline-flex align-items-center text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="material-symbols-outlined">shopping_bag</span>&nbsp; {{ total_items }}
-              </a>                     
+              </a>  
+              <!-- If there is a cart in session show it with items as a dropdown -->
+              {% if cart %}
               <ul class="dropdown-menu dropdown-menu-end border-dark">
-                {% if cart %}
                   {% for item in cart %}
                     <div class="card mb-1 border-0" style="width: 300px;">
                       <div class="row g-0 align-items-center ps-2 pe-2">
@@ -61,11 +63,11 @@
                       </div>
                     </div>
                   {% endfor %}
-                {% endif %}
-                <div class="text-center">
-                  <a class="btn btn-outline-dark text-center" href="{{ url_for('checkout')}}">Checkout</a>
-                </div>
-              </ul>
+                  <div class="text-center">
+                    <a class="btn btn-outline-dark" href="{{ url_for('checkout') }}">Checkout</a>
+                  </div>
+                </ul>
+              {% endif %}
             </li>
           {% endif %}
         </ul>
@@ -73,11 +75,12 @@
     </div>
   </nav>
     {% block main %} {% endblock %}
-    {% if login_page %}
+    <!-- Show footer according to the content (Stick footer if the content takes more than the normal page) -->
+    {% if less_content %}
     <div class="container-fluid p-0">
       <footer class="text-secondary py-4 text-center">
         <div class="container">
-          <p>&copy; 2023 Tech Haven. All rights reserved.</p>
+          <p>&copy; {{year}} Tech Haven. All rights reserved.</p>
         </div>
       </footer>
     </div>
