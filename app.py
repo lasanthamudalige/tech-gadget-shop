@@ -9,9 +9,11 @@ import stripe
 import os
 from dotenv import load_dotenv
 
+# Load  all variables from .env file
 load_dotenv()
-# This is your test secret API key.
+# This is your secret API key.
 stripe.api_key = os.environ.get("STRIPE_APIT_KEY")
+
 
 
 # create the app
@@ -25,17 +27,21 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///techshop.db"
 # initialize the app with the extension
 db.init_app(app)
 
+# This is a test key to run the flask app
+app.secret_key = b'90dca4e5e781de815882c46061ec3813f7eafb3eb63c8000316f99dda92c262d'
+
 
 # Flask login
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
+# This will load the user and return an user object to use 
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, user_id)
 
 
+# Tables
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, unique=True)
@@ -54,7 +60,7 @@ class Item(db.Model):
     img_url = db.Column(db.String(250))
 
 
-
+# Test dataset
 def add_default_data():
     if not Item.query.filter_by(name="Smart Speaker Pro").first():
         item1 = Item(
@@ -125,9 +131,7 @@ def add_default_data():
 #     add_default_data()
 
  
-app.secret_key = b'90dca4e5e781de815882c46061ec3813f7eafb3eb63c8000316f99dda92c262d'
-
-
+# This function is to stop other people accessing admin parts of the website
 def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -140,22 +144,21 @@ def admin_only(f):
 
 @app.route("/")
 def home():
+    # Get items from the database
     items = Item.query.all()
 
     cart = None
     total_items = 0 
 
+    # If the cart variable in session return the cart and total items in it
     if "cart" in session:
       cart = session["cart"]
       for item in cart:
         total_items += item["quantity"]
-      
-    return render_template("index.html", 
-                           year=datetime.date.today().year, 
-                           current_user=current_user,
-                           items=items,
-                           total_items=total_items,
-                           cart=cart)
+    
+    # pass year and current user from the 'load_user' function
+    return render_template("index.html", year=datetime.date.today().year, current_user=current_user, items=items,
+                           total_items=total_items, cart=cart)
 
 
 @app.route("/login", methods=["Get","POST"])
@@ -177,6 +180,7 @@ def login():
             
             user = User.query.filter_by(email=email).first()
 
+            # Pass in error messages to the webpage to show
             if user == None:
                 flash("User not found.", category="error")
             elif not check_password_hash(user.password, password):
@@ -189,6 +193,7 @@ def login():
         except EmailNotValidError as e:
             flash("Invalid email address.", category="error")
 
+    # Pass less_content variable to render a different footer for this page
     return render_template("login.html", less_content=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items, cart=cart)
 
 
@@ -215,14 +220,17 @@ def sign_up():
             if password == confirmed_password:
 
                 user = User.query.filter_by(email=email).first()
-
+                
+                # If the email isn't in the DB create a new user and add it 
                 if user == None:
                     salted_hashed_password = generate_password_hash(password=password, salt_length=16)
                     new_user = User(name=name, email=email, password=salted_hashed_password)
                     db.session.add(new_user)
                     db.session.commit()
 
+                    # Log the user in
                     login_user(new_user)
+                    # Clear any error message on the page
                     session.pop('_flashes', None)
                     return redirect("/")
                 else:
@@ -236,7 +244,7 @@ def sign_up():
  
     return render_template("sign-up.html", less_content=True, year=datetime.date.today().year, current_user=current_user, total_items=total_items, cart=cart)
 
-
+# Log out the current user 
 @app.route("/logout")
 @login_required
 def logout():
@@ -264,11 +272,11 @@ def add_item():
         item_image_url = request.form.get("item-image")
         item_price = float(request.form.get("item-price"))
         item_description = request.form.get("item-description")
-        print(item_type)
         
         if item_type == "" or item_name == "" or item_image_url == "" or item_price == "" or item_description == "":
             flash("Please fill all the input fields.", "error")
         else:
+            # Change type of the items according to user input and add it to the DB
             if item_type == "Featured Product":
                 new_item = Item(name=item_name, category="featured" , img_url=item_image_url, price=item_price, description=item_description)
 
@@ -295,13 +303,20 @@ def edit_item(item_id):
         item_image_url = request.form.get("item-image")
         item_price = float(request.form.get("item-price"))
         item_description = request.form.get("item-description")
-
+        
+        # Update the item if all the inputs are fulfilled
         if item_type == "" or item_name == "" or item_image_url == "" or item_price == "" or item_description == "":
             flash("Please fill all the input fields.", "error")
         else:
             found_item = Item.query.filter_by(id=item_id).first()
                 
+            if item_type == "Featured Product":
+                item_category = "featured"
+            elif item_type == "Popular Product":
+                item_category = "popular"
+
             found_item.name = item_name
+            found_item.category = item_category
             found_item.img_url = item_image_url
             found_item.price = item_price
             found_item.description = item_description
@@ -335,27 +350,28 @@ def delete_item(item_id):
 def add_to_cart(item_id, checkout):
     product = Item.query.filter_by(id=item_id).first()
 
+    # If the product is found in the DB
     if product:
+        # if the cart variable in the session 
         if "cart" in session:
             cart = session["cart"] 
             found = False
+            # If the item is already in the cart add 1 to the quantity of that item
             for item in session["cart"]:
                 if item["name"] == product.name:
                     found = True
                     new_quantity = item["quantity"] + 1
                     item.update({"quantity" : new_quantity})
-            
+            # Else add that item as a new item
             if not found:
                 cart.append({"id": product.id, "name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
             session["cart"] = cart
-        
+        # If there is not cart in the session create one and add an item to it
         else: 
             session["cart"] = []
-            session["cart"].append({"id": product.id, "name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})
-        
-        print(session["cart"])
-    print(checkout)
-
+            session["cart"].append({"id": product.id, "name": product.name, "image": product.img_url , "price": product.price, "quantity": 1})        
+    
+    # Redirect the user according the page where user add new items to the cart
     if checkout == "True":
         return redirect("/checkout")
     else:
@@ -372,8 +388,10 @@ def remove_from_cart(item_id):
             for item in session["cart"]:
                 if item["name"] == product.name:
                     quantity = item["quantity"]
+                    # If the item quantity is 1, Remove the whole item from the cart
                     if quantity == 1:
                         cart.remove(item)
+                    # Remove 1 from quantity if the quantity is above 1
                     else: 
                         new_quantity = item["quantity"] - 1
                         item.update({"quantity" : new_quantity})
@@ -398,11 +416,12 @@ def checkout():
 
     return render_template("checkout.html", year=datetime.date.today().year ,less_content=True ,total_items=total_items, cart=cart, total_amount=round(total_amount, 2), date=datetime.date.today())
 
-
+# Checkout session for Stripe
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
     try:
         line_items = []
+        #  Create a line item for each item in the cart
         for item in session["cart"]:
             line_item = {
                 "price_data": {
@@ -411,7 +430,6 @@ def create_checkout_session():
                                      "images": [item["image"]]
                                      },
                     "unit_amount_decimal": item["price"] * 100,
-                    # "custom_unit_amount": 1,
                 },
                 "quantity": item["quantity"],
             }
@@ -421,6 +439,7 @@ def create_checkout_session():
             line_items=line_items,
             mode='payment',
             billing_address_collection= "required",
+            # Redirect the user to relevant page after the payment
             success_url="http://127.0.0.1:5000/success",
             cancel_url= "http://127.0.0.1:5000/"
         )

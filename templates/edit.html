@@ -4,6 +4,21 @@
     <div class="container col-md-4 p-5 text-center">
         <h2 class="p-4">Edit item</h2>
         <form action="{{ url_for('edit_item', item_type=item_type, item_id=item.id) }}" method="post">
+            <div class="row my-4">
+              <div class="col-12 col-md-6 d-flex justify-content-center">
+                <div class="form-check d-flex align-items-center">
+                  <input class="form-check-input mt-0 me-2" type="radio" id="featured-product-radio" name="product-type" value="Featured Product" aria-label="Radio button for following text input" checked>
+                  <label class="form-check-label" for="featured-product-radio">Featured Product</label>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 d-flex justify-content-center">
+                <div class="form-check d-flex align-items-center">
+                  <input class="form-check-input mt-0 me-2" type="radio" id="popular-product-radio" name="product-type" value="Popular Product" aria-label="Radio button for following text input">
+                  <label class="form-check-label" for="popular-product-radio">Popular Product</label>
+                </div>
+              </div>
+            </div>
+
             <div class="mb-3">
               <label for="ItemName" class="form-label">Item Name</label>
               <input type="text" class="form-control" name="item-name" id="ItemName" placeholder="{{ item.name }}" aria-describedby="Input for product name" required>
