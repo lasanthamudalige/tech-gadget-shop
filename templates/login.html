@@ -1,10 +1,8 @@
-{% extends "layout.html" %}
-{% block title %}Login | Tech Haven - Your Gadget Paradise{% endblock %}
-{% block main %}
+{% extends "layout.html" %} {% block title %}Login | Tech Haven - Your Gadget
+Paradise{% endblock %} {% block main %}
 <div class="container col-md-4 p-5 text-center">
   <form action="/login" method="post">
     <div class="mb-3">
-      <label for="inputEmail1" class="form-label">Email address</label>
       <input
         type="email"
         class="form-control"
@@ -12,24 +10,24 @@
         id="inputEmail1"
         aria-describedby="email"
       />
+      <label for="inputEmail1" class="form-label">Email address</label>
     </div>
     <div class="mb-3">
-      <label for="inputPassword" class="form-label">Password</label>
       <input
         type="password"
         class="form-control"
         name="password"
         id="inputPassword"
       />
+      <label for="inputPassword" class="form-label">Password</label>
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% for category, message in messages %}
-      <div class="mt-5 mb-5 {{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endwith %}
+  {% with messages = get_flashed_messages(with_categories=true) %} {% for
+  category, message in messages %}
+  <div class="mt-5 mb-5 {{ category }}">{{ message }}</div>
+  {% endfor %} {% endwith %}
 
   <p class="mt-5 mb-5">
     Don't have an account? <a href="{{ url_for('sign_up') }}">Sign Up</a>

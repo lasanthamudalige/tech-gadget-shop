@@ -1,47 +1,93 @@
-{% extends "layout.html" %} 
-{% block title %}Add | Tech Haven - Your Gadget Paradise{% endblock %} 
-{% block main%}
-    <div class="container col-md-4 p-5 text-center">
-        <h2 class="p-4">Add item</h2>
-        <form action="/add_item" method="post">
-            <div class="row my-4">
-              <div class="col-12 col-md-6 d-flex justify-content-center">
-                <div class="form-check d-flex align-items-center">
-                  <input class="form-check-input mt-0 me-2" type="radio" id="featured-product-radio" name="product-type" value="Featured Product" aria-label="Radio button for following text input" checked>
-                  <label class="form-check-label" for="featured-product-radio">Featured Product</label>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 d-flex justify-content-center">
-                <div class="form-check d-flex align-items-center">
-                  <input class="form-check-input mt-0 me-2" type="radio" id="popular-product-radio" name="product-type" value="Popular Product" aria-label="Radio button for following text input">
-                  <label class="form-check-label" for="popular-product-radio">Popular Product</label>
-                </div>
-              </div>
-            </div>
+{% extends "layout.html" %} {% block title %}Add | Tech Haven - Your Gadget
+Paradise{% endblock %} {% block main%}
+<div class="container col-md-4 p-5 text-center">
+  <h2 class="p-4">Add item</h2>
+  <form action="/add_item" method="post">
+    <div class="row my-4">
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <div class="form-check d-flex align-items-center">
+          <input
+            class="form-check-input mt-0 me-2"
+            type="radio"
+            id="featured-product-radio"
+            name="product-type"
+            value="Featured Product"
+            aria-label="Radio button for following text input"
+            checked
+          />
+          <label class="form-check-label" for="featured-product-radio"
+            >Featured Product</label
+          >
+        </div>
+      </div>
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <div class="form-check d-flex align-items-center">
+          <input
+            class="form-check-input mt-0 me-2"
+            type="radio"
+            id="popular-product-radio"
+            name="product-type"
+            value="Popular Product"
+            aria-label="Radio button for following text input"
+          />
+          <label class="form-check-label" for="popular-product-radio"
+            >Popular Product</label
+          >
+        </div>
+      </div>
+    </div>
 
-            <div class="mb-3">
-              <label for="ItemName" class="form-label">Item Name</label>
-              <input type="text" class="form-control" name="item-name" id="ItemName" aria-describedby="Input for product name" required>
-            </div>
-            <div class="mb-3">
-              <label for="InputImage" class="form-label">Item Image</label>
-              <input type="text" class="form-control" name="item-image" id="InputImage" aria-describedby="Input for product image" required>
-            </div>
-            <div class="mb-3">
-              <label for="InputPrice" class="form-label">Item Price</label>
-              <input type="number" min="0" class="form-control" name="item-price" id="InputPrice" aria-describedby="Input for product price" required>
-            </div>
-            <div class="mb-3">
-              <label for="InputDescription" class="form-label">Item Description</label>
-              <textarea name="item-description" class="form-control" id="InputDescription" rows="3" aria-describedby="Input for product description"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Item</button>
-          </form>
-        
-        <!-- Show if there is an error message -->
-        {% with messages = get_flashed_messages(with_categories=true) %} 
-        {% for category, message in messages %}
-            <div class="my-5 pb-5 {{ category }}">{{ message }}</div>
-        {% endfor %} {% endwith %}
-  </div>
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        name="item-name"
+        id="item-name"
+        aria-describedby="Input for product name"
+        required
+      />
+      <label for="ItemName" class="form-label" for="item-name">Item Name</label>
+    </div>
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        name="item-image"
+        id="input-image-link"
+        aria-describedby="Input for product image"
+        required
+      />
+      <label for="input-image-link" class="form-label">Item Image</label>
+    </div>
+    <div class="mb-3">
+      <input
+        type="number"
+        min="0"
+        class="form-control"
+        name="item-price"
+        id="input-price"
+        aria-describedby="Input for product price"
+        required
+      />
+      <label for="input-price" class="form-label">Item Price</label>
+    </div>
+    <div class="mb-3">
+      <textarea
+        name="item-description"
+        class="form-control"
+        id="input-description"
+        rows="3"
+        aria-describedby="Input for product description"
+      ></textarea>
+      <label for="input-description" class="form-label">Item Description</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Item</button>
+  </form>
+
+  <!-- Show if there is an error message -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% for
+  category, message in messages %}
+  <div class="my-5 pb-5 {{ category }}">{{ message }}</div>
+  {% endfor %} {% endwith %}
+</div>
 {% endblock %}

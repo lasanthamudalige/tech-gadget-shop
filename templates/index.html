@@ -1,24 +1,29 @@
-{% extends "layout.html" %}
-{% block title %}Tech Haven - Your Gadget Paradise{% endblock %}
-{% block main %}
+{% extends "layout.html" %} {% block title %}Tech Haven - Your Gadget Paradise{%
+endblock %} {% block main %}
 <section id="featured-product" class="py-4">
   <div class="container">
     <h2 class="mb-4">Featured Products</h2>
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        {% for item in items %}
-          {% if item.category == "featured" %}
-            <div class="card py-4">
-              <img src="{{ item.img_url}}" class="card-img-top w-50 align-self-center" alt="{{ item.name }}">
-              <div class="card-body text-center">
-                <h3 class="card-title">{{ item.name }}</h3>
-                <p class="card-text">{{ item.description }}</p>
-                <h4 class="card-price">${{ item.price }}</h4>
-                <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_id=item.id, checkout=False) }}">Add to Cart</a>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
+        {% for item in items %} {% if item.category == "featured" %}
+        <div class="card py-4">
+          <img
+            src="{{ item.img_url}}"
+            class="card-img-top w-50 align-self-center"
+            alt="{{ item.name }}"
+          />
+          <div class="card-body text-center">
+            <h3 class="card-title">{{ item.name }}</h3>
+            <p class="card-text">{{ item.description }}</p>
+            <h4 class="card-price">${{ item.price }}</h4>
+            <a
+              class="btn btn-outline-dark"
+              href="{{ url_for('add_to_cart', item_id=item.id, checkout=False) }}"
+              >Add to Cart</a
+            >
+          </div>
+        </div>
+        {% endif %} {% endfor %}
       </div>
     </div>
   </div>
@@ -28,21 +33,27 @@
   <div class="container">
     <h2 class="mb-4">Popular Products</h2>
     <div class="row">
-      {% for item in items %}
-        {% if item.category == "popular" %}
-          <div class="col-md-3 py-2">
-            <div class="card">
-              <img src="{{ item.img_url}}" class="card-img-top align-self-center p-2" alt="Smartphone">
-              <div class="card-body">
-                <h3 class="card-title">{{ item.name }}</h3>
-                <p class="card-text">{{ item.description }}</p>
-                <h4 class="card-price">${{ item.price }}</h4>
-                <a class="btn btn-outline-dark" href="{{ url_for('add_to_cart', item_id=item.id, checkout='False') }}">Add to Cart</a>
-              </div>
-            </div>
+      {% for item in items %} {% if item.category == "popular" %}
+      <div class="col-md-3 py-2">
+        <div class="card">
+          <img
+            src="{{ item.img_url}}"
+            class="card-img-top align-self-center p-2"
+            alt="Smartphone"
+          />
+          <div class="card-body">
+            <h3 class="card-title">{{ item.name }}</h3>
+            <p class="card-text">{{ item.description }}</p>
+            <h4 class="card-price">${{ item.price }}</h4>
+            <a
+              class="btn btn-outline-dark"
+              href="{{ url_for('add_to_cart', item_id=item.id, checkout='False') }}"
+              >Add to Cart</a
+            >
           </div>
-        {% endif %}
-      {% endfor %}
+        </div>
+      </div>
+      {% endif %} {% endfor %}
     </div>
   </div>
 </section>
@@ -54,7 +65,10 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <p class="card-text">"I love the smartphone I purchased from Tech Haven. It has an amazing camera!"</p>
+            <p class="card-text">
+              "I love the smartphone I purchased from Tech Haven. It has an
+              amazing camera!"
+            </p>
             <footer class="blockquote-footer">John Smith</footer>
           </div>
         </div>
@@ -62,7 +76,10 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <p class="card-text">"The gaming laptop I bought from Tech Haven exceeded my expectations. It runs all the latest games smoothly."</p>
+            <p class="card-text">
+              "The gaming laptop I bought from Tech Haven exceeded my
+              expectations. It runs all the latest games smoothly."
+            </p>
             <footer class="blockquote-footer">Emily Johnson</footer>
           </div>
         </div>
@@ -72,7 +89,11 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <p class="card-text">"The wireless noise-canceling headphones from Tech Haven are fantastic. They provide immersive sound and block out all the noise around me."</p>
+            <p class="card-text">
+              "The wireless noise-canceling headphones from Tech Haven are
+              fantastic. They provide immersive sound and block out all the
+              noise around me."
+            </p>
             <footer class="blockquote-footer">Michael Anderson</footer>
           </div>
         </div>
@@ -80,7 +101,10 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <p class="card-text">"I'm impressed with the fitness smartwatch I purchased from Tech Haven. It helps me track my workouts and stay motivated."</p>
+            <p class="card-text">
+              "I'm impressed with the fitness smartwatch I purchased from Tech
+              Haven. It helps me track my workouts and stay motivated."
+            </p>
             <footer class="blockquote-footer">Sarah Thompson</footer>
           </div>
         </div>
@@ -89,24 +113,41 @@
   </div>
 </section>
 
-
 <section id="contact" class="py-4">
   <div class="container">
     <h2 class="mb-4">Contact Us</h2>
     <form>
       <div class="form-group">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control w-50"
+          required
+        />
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" class="form-control" required>
       </div>
 
       <div class="form-group">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control w-50"
+          required
+        />
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" class="form-control" required>
       </div>
 
       <div class="form-group">
+        <textarea
+          id="message"
+          name="message"
+          class="form-control w-50"
+          rows="4"
+          required
+        ></textarea>
         <label for="message">Message:</label>
-        <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
       </div>
 
       <button type="submit" class="btn btn-secondary">Submit</button>

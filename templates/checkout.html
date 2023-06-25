@@ -1,54 +1,66 @@
-{% extends "layout.html" %}
-{% block title %}Checkout | Tech Haven - Your Gadget Paradise{% endblock %}
-{% block main %}
-    <section id="item-table" class="container">
-       <div class="text-center mt-5 mb-5">
-            <div class="col-md-12">
-                <h3 class="pb-4">Order Summary</h3>
-                <div class="row text-center mb-5">
-                    <div class="col-md-12 text-center align-content-center">
-                        <table class="table text-center align-content-center" style="margin: 0 auto; font-size: 16px;">
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if cart %}
-                                  {% for item in cart %}
-                                <tr>
-                                    <td>{{ item.name }}</td>
-                                    <td>${{ item.price }}</td>
-                                    <td>
-                                      <!-- Call functions in the server with the item id and pass checkout variable as true to redirect to checkout page -->
-                                      <a class="btn btn-outline-dark me-2" href="{{ url_for('remove_from_cart', item_id=item.id, checkout=True) }}">-</a>
-                                      {{ item.quantity }}
-                                      <a class="btn btn-outline-dark ms-2" href="{{ url_for('add_to_cart', item_id=item.id, checkout=True) }}">+</a>
-                                    </td>
-                                    <!-- Round off the total price to 2 digits -->
-                                    <td>${{ "%.2f"|format(item.price * item.quantity) }}</td>
-                                </tr>
-                                {% endfor %}
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <h5 style="text-align: center;">Total: ${{ total_amount }}</h5>
-            </div>
+{% extends "layout.html" %} {% block title %}Checkout | Tech Haven - Your Gadget
+Paradise{% endblock %} {% block main %}
+<section id="item-table" class="container">
+  <div class="text-center mt-5 mb-5">
+    <div class="col-md-12">
+      <h3 class="pb-4">Order Summary</h3>
+      <div class="row text-center mb-5">
+        <div class="col-md-12 text-center align-content-center">
+          <table
+            class="table text-center align-content-center"
+            style="margin: 0 auto; font-size: 16px"
+          >
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if cart %} {% for item in cart %}
+              <tr>
+                <td>{{ item.name }}</td>
+                <td>${{ item.price }}</td>
+                <td>
+                  <!-- Call functions in the server with the item id and pass checkout variable as true to redirect to checkout page -->
+                  <a
+                    class="btn btn-outline-dark me-2"
+                    href="{{ url_for('remove_from_cart', item_id=item.id, checkout=True) }}"
+                    >-</a
+                  >
+                  {{ item.quantity }}
+                  <a
+                    class="btn btn-outline-dark ms-2"
+                    href="{{ url_for('add_to_cart', item_id=item.id, checkout=True) }}"
+                    >+</a
+                  >
+                </td>
+                <!-- Round off the total price to 2 digits -->
+                <td>${{ "%.2f"|format(item.price * item.quantity) }}</td>
+              </tr>
+              {% endfor %} {% endif %}
+            </tbody>
+          </table>
         </div>
-    </section>
-    <section id="bottom-container" class="container text-center mt-5 mb-5">
-      <h6 class="text-danger">*Please use following test card for payments*</h6>
-      <!-- Show card expiration date a month after current month -->
-      <p class="text-danger">4242 4242 4242 4242 - Exp:{{ date.month + 1 }}/{{ date.day }} - CVC: 123</p>
+      </div>
+      <h5 style="text-align: center">Total: ${{ total_amount }}</h5>
+    </div>
+  </div>
+</section>
+<section id="bottom-container" class="container text-center mt-5 mb-5">
+  <h6 class="text-danger">*Please use following test card for payments*</h6>
+  <!-- Show card expiration date a month after current month -->
+  <p class="text-danger">
+    4242 4242 4242 4242 - Exp:{{ date.month + 1 }}/{{ date.day }} - CVC: 123
+  </p>
 
-      <!-- call stripe checkout route  -->
-      <form action="/create-checkout-session" method="post">
-        <button type="submit" class="btn btn-primary text-center mt-4">Checkout</button>
-      </form>
-    </section>
+  <!-- call stripe checkout route  -->
+  <form action="/create-checkout-session" method="post">
+    <button type="submit" class="btn btn-primary text-center mt-4">
+      Checkout
+    </button>
+  </form>
+</section>
 {% endblock %}
