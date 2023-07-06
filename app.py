@@ -153,8 +153,10 @@ def home():
     # If the cart variable in session return the cart and total items in it
     if "cart" in session:
       cart = session["cart"]
-      for item in cart:
-        total_items += item["quantity"]
+      # If the cart is session and items are in cart
+      if session["cart"] != None:
+        for item in cart:
+            total_items += item["quantity"]
     
     # pass year and current user from the 'load_user' function
     return render_template("index.html", year=datetime.date.today().year, current_user=current_user, items=items,
@@ -167,7 +169,7 @@ def login():
     cart = None
     total_items = 0  
 
-    if session["cart"]:
+    if "cart" in session:
       cart = session["cart"]
       for item in cart:
         total_items += item["quantity"]
