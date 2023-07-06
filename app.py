@@ -205,7 +205,7 @@ def sign_up():
     cart = None
     total_items = 0  
 
-    if session["cart"]:
+    if "cart" in session:
       cart = session["cart"]
       for item in cart:
         total_items += item["quantity"]
@@ -354,8 +354,8 @@ def add_to_cart(item_id, checkout):
 
     # If the product is found in the DB
     if product:
-        # if the cart variable in the session 
-        if "cart" in session:
+        # if the cart variable in the session and cart is not empty
+        if "cart" in session and session["cart"] != None:
             cart = session["cart"] 
             found = False
             # If the item is already in the cart add 1 to the quantity of that item

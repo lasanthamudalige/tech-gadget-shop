@@ -53,7 +53,7 @@ Paradise{% endblock %} {% block main %}
   <h6 class="text-danger">*Please use following test card for payments*</h6>
   <!-- Show card expiration date a month after current month -->
   <p class="text-danger">
-    4242 4242 4242 4242 - Exp:{{ date.month + 1 }}/{{ date.day }} - CVC: 123
+    4242 4242 4242 4242 - Exp: {{ "{:02d}".format(date.month + 1) }}/{{ "{:02d}".format(date.day) }} - CVC: 123
   </p>
 
   <!-- call stripe checkout route  -->
