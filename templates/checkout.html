@@ -51,7 +51,7 @@ Paradise{% endblock %} {% block main %}
 </section>
 <section id="bottom-container" class="container text-center mt-5 mb-5">
   <h6 class="text-danger">*Please use following test card for payments*</h6>
-  <!-- Show card expiration date a month after current month -->
+  <!-- Show card expiration date a month after current month using 2 digits -->
   <p class="text-danger">
     4242 4242 4242 4242 - Exp: {{ "{:02d}".format(date.month + 1) }}/{{ "{:02d}".format(date.day) }} - CVC: 123
   </p>
