@@ -10,7 +10,7 @@ A Tech gadget shop program using [Python](https://www.python.org/), [Flask](http
 
 ## General info
 
-User can register, login, buy items on the website and admin can add/edit/delete new items on the store.
+User can register, login, add items to the cart and buy items on the website and admin can add/edit/delete new items on the store.
 
 ## Technologies
 Project is created with:
@@ -50,4 +50,4 @@ $ python server.py
 ```
 
 ## License 
-This project is open source and available under the [MIT License](https://github.com/lasanthamudalige/todo-list/blob/main/LICENSE).
+This project is open source and available under the [MIT License](https://github.com/lasanthamudalige/tech-gadget-shop/blob/main/LICENSE).
