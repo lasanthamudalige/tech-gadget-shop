@@ -24,7 +24,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///techshop.db"
 db.init_app(app)
 
 # This is a test key to run the flask app
-app.secret_key = b'90dca4e5e781de815882c46061ec3813f7eafb3eb63c8000316f99dda92c262d'
+app.secret_key = os.environ.get("SECRET_KEY")
 
 # Flask login
 login_manager = LoginManager()
