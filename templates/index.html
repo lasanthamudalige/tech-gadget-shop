@@ -120,6 +120,7 @@ endblock %} {% block main %}
         <h2 class="mb-4">Contact Us</h2>
         <form>
           <div class="form-group">
+            <label for="name" class="pb-2">Name:</label>
             <input
               type="text"
               id="name"
@@ -127,10 +128,10 @@ endblock %} {% block main %}
               class="form-control w-100"
               required
             />
-            <label for="name">Name:</label>
           </div>
 
           <div class="form-group">
+            <label for="email" class="pt-2 pb-2">Email:</label>
             <input
               type="email"
               id="email"
@@ -138,10 +139,10 @@ endblock %} {% block main %}
               class="form-control w-100"
               required
             />
-            <label for="email">Email:</label>
           </div>
 
           <div class="form-group">
+            <label for="message" class="pt-2 pb-2">Message:</label>
             <textarea
               id="message"
               name="message"
@@ -149,10 +150,9 @@ endblock %} {% block main %}
               rows="4"
               required
             ></textarea>
-            <label for="message">Message:</label>
           </div>
 
-          <button type="submit" class="btn btn-secondary">Submit</button>
+          <button type="submit" class="btn btn-secondary mt-2">Submit</button>
         </form>
       </div>
     </div>
