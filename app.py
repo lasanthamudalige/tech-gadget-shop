@@ -360,8 +360,8 @@ def delete_item(item_id):
     return redirect("/admin")
 
 
-@app.route("/add-to-cart/<item_id>/<checkout>")
-def add_to_cart(item_id, if_checkout):
+@app.route("/add-to-cart/<item_id>/<return_to_checkout>")
+def add_to_cart(item_id, return_to_checkout):
     product = Item.query.filter_by(id=item_id).first()
 
     # If the product is found in the DB
@@ -389,7 +389,7 @@ def add_to_cart(item_id, if_checkout):
                  "quantity": 1})
 
             # Redirect the user according the page where user add new items to the cart
-    if if_checkout == "True":
+    if return_to_checkout == "True":
         return redirect("/checkout")
     else:
         return redirect("/")

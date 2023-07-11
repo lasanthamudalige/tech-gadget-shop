@@ -27,13 +27,13 @@ Paradise{% endblock %} {% block main %}
                   <!-- Call functions in the server with the item id and pass checkout variable as true to redirect to checkout page -->
                   <a
                     class="btn btn-outline-dark me-2"
-                    href="{{ url_for('remove_from_cart', item_id=item.id, checkout=True) }}"
+                    href="{{ url_for('remove_from_cart', item_id=item.id) }}"
                     >-</a
                   >
                   {{ item.quantity }}
                   <a
                     class="btn btn-outline-dark ms-2"
-                    href="{{ url_for('add_to_cart', item_id=item.id, checkout=True) }}"
+                    href="{{ url_for('add_to_cart', item_id=item.id, return_to_checkout=True) }}"
                     >+</a
                   >
                 </td>
