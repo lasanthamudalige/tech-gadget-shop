@@ -17,7 +17,15 @@ Project is created with:
 * Python version: 3.10.6
 * Flask version: 2.2.2
 * Stripe API
-	
+
+## Screenshots
+
+- ***Admin panel preview and function***
+	- ![ezgif com-crop](https://github.com/lasanthamudalige/tech-gadget-shop/assets/91461938/ab458f3e-1eb1-46b9-a81f-41e34e17ba5b)
+
+- ***Normal user interactions***
+	- ![ezgif com-crop(1)](https://github.com/lasanthamudalige/tech-gadget-shop/assets/91461938/ba91abae-8d1a-4245-863f-ec7059a7f084)
+
 ## Setup
 
 To clone and run this application, you'll need [Git](https://git-scm.com) installed on your computer.\
