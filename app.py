@@ -460,10 +460,10 @@ def create_checkout_session():
             success_url="http://127.0.0.1:5000/success",
             cancel_url="http://127.0.0.1:5000/"
         )
+        return redirect(checkout_session.url, code=303)
     except Exception as e:
         return str(e)
 
-    return redirect(checkout_session.url, code=303)
 
 
 @app.route("/success")

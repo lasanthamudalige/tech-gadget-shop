@@ -56,11 +56,16 @@ Paradise{% endblock %} {% block main %}
     4242 4242 4242 4242 - Exp: {{ "{:02d}".format(date.month + 1) }}/{{ "{:02d}".format(date.day) }} - CVC: 123
   </p>
 
+  {% if cart %}
   <!-- call stripe checkout route  -->
   <form action="/create-checkout-session" method="post">
     <button type="submit" class="btn btn-primary text-center mt-4">
       Checkout
     </button>
   </form>
+  {% else %}
+  <a href="{{ url_for('home') }}" class="btn btn-primary mt-4">Go home</a>
+  {% endif %}
+
 </section>
 {% endblock %}
