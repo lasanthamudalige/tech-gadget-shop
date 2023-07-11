@@ -2,7 +2,7 @@
 endblock %} {% block main %}
 <section id="featured-product" class="py-4">
   <div class="container">
-    <h2 class="mb-4">Featured Products</h2>
+    <h2 class="mb-4 text-center">Featured Products</h2>
     <div class="row">
       <div class="col-md-6 offset-md-3">
         {% for item in items %} {% if item.category == "featured" %}
@@ -31,7 +31,7 @@ endblock %} {% block main %}
 
 <section id="products" class="py-4">
   <div class="container">
-    <h2 class="mb-4">Popular Products</h2>
+    <h2 class="mb-4 text-center">Popular Products</h2>
     <div class="row">
       {% for item in items %} {% if item.category == "popular" %}
       <div class="col-md-3 py-2">
@@ -60,7 +60,7 @@ endblock %} {% block main %}
 
 <section id="testimonials" class="py-4">
   <div class="container">
-    <h2 class="mb-4">Customer Testimonials</h2>
+    <h2 class="mb-4 text-center">Customer Testimonials</h2>
     <div class="row">
       <div class="col-md-6">
         <div class="card">
@@ -113,46 +113,51 @@ endblock %} {% block main %}
   </div>
 </section>
 
-<section id="contact" class="py-4">
+<section id="contact" class="py-4 text-center">
   <div class="container">
-    <h2 class="mb-4">Contact Us</h2>
-    <form>
-      <div class="form-group">
-        <input
-          type="text"
-          id="name"
-          name="name"
-          class="form-control w-50"
-          required
-        />
-        <label for="name">Name:</label>
-      </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2 class="mb-4">Contact Us</h2>
+        <form>
+          <div class="form-group">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control w-100"
+              required
+            />
+            <label for="name">Name:</label>
+          </div>
 
-      <div class="form-group">
-        <input
-          type="email"
-          id="email"
-          name="email"
-          class="form-control w-50"
-          required
-        />
-        <label for="email">Email:</label>
-      </div>
+          <div class="form-group">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control w-100"
+              required
+            />
+            <label for="email">Email:</label>
+          </div>
 
-      <div class="form-group">
-        <textarea
-          id="message"
-          name="message"
-          class="form-control w-50"
-          rows="4"
-          required
-        ></textarea>
-        <label for="message">Message:</label>
-      </div>
+          <div class="form-group">
+            <textarea
+              id="message"
+              name="message"
+              class="form-control w-100"
+              rows="4"
+              required
+            ></textarea>
+            <label for="message">Message:</label>
+          </div>
 
-      <button type="submit" class="btn btn-secondary">Submit</button>
-    </form>
+          <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
+
 
 {% endblock %}
