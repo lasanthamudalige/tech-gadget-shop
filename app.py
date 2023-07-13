@@ -174,7 +174,7 @@ def login():
     cart = None
     total_items = 0
 
-    if "cart" in session:
+    if "cart" in session and session["cart"] is not None:
         cart = session["cart"]
         for item in cart:
             total_items += item["quantity"]
@@ -210,7 +210,7 @@ def sign_up():
     cart = None
     total_items = 0
 
-    if "cart" in session:
+    if "cart" in session and session["cart"] is not None:
         cart = session["cart"]
         for item in cart:
             total_items += item["quantity"]
