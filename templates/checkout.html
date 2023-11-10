@@ -53,7 +53,8 @@ Paradise{% endblock %} {% block main %}
   <h6 class="text-danger">*Please use following test card for payments*</h6>
   <!-- Show card expiration date a month after current month using 2 digits -->
   <p class="text-danger">
-    4242 4242 4242 4242 - Exp: {{ "{:02d}".format(date.month + 1) }}/{{ "{:02d}".format(date.day) }} - CVC: 123
+    <!-- Format the month to show in 2 digits and the year to show only the last 2 digits -->
+    4242 4242 4242 4242 - Exp: {{"{:02d}".format(date.month) }}/{{(year|string)[-2:] }} - CVC: 123
   </p>
 
   {% if cart %}
@@ -66,6 +67,5 @@ Paradise{% endblock %} {% block main %}
   {% else %}
   <a href="{{ url_for('home') }}" class="btn btn-primary mt-4">Go home</a>
   {% endif %}
-
 </section>
 {% endblock %}
