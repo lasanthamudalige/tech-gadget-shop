@@ -54,7 +54,8 @@ Paradise{% endblock %} {% block main %}
   <!-- Show card expiration date a month after current month using 2 digits -->
   <p class="text-danger">
     <!-- Format the month to show in 2 digits and the year to show only the last 2 digits -->
-    4242 4242 4242 4242 - Exp: {{"{:02d}".format(date.month) }}/{{(year|string)[-2:] }} - CVC: 123
+	<!-- Add  1 to the current year to avoid the card expire error -->
+    4242 4242 4242 4242 - Exp: {{"{:02d}".format(date.month) }}/{{((year+1)|string)[-2:] }} - CVC: 123
   </p>
 
   {% if cart %}
