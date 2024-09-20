@@ -14,7 +14,7 @@ User can register, login, add items to the cart and buy items on the website and
 
 ## Technologies
 Project is created with:
-* Python version: 3.10.6
+* Python version: >= 3.10
 * Flask version: 2.2.2
 * Stripe API
 
