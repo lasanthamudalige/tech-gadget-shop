@@ -31,30 +31,37 @@ Project is created with:
 To clone and run this application, you'll need [Git](https://git-scm.com) installed on your computer.\
 From your command line run:
 
+* Clone this repository
+```bsah
+git clone https://github.com/lasanthamudalige/tech-gadget-shop.git
 ```
-# Clone this repository
-$ git clone https://github.com/lasanthamudalige/tech-gadget-shop.git
 
-# Go into the repository
-$ cd tech-gadget-shop/
+* Go into the repository
+```bash
+cd tech-gadget-shop/
+```
 
-# To install all dependencies
-$ pip install -r requirements.txt
+* To install all dependencies using pip
+```bash
+pip install -r requirements.txt
+```
+
+* To install all dependencies to current environment using miniconda
+```bash
+conda env update -n my_env --file environment.yaml
 ```
 
 
 ## Usage
 
 To run this project in Linux/Unix:
-
-```
-$ python3 server.py
+```bash
+python3 server.py
 ```
 
 To run this project in Windows:
-
-```
-$ python server.py
+```bash
+python server.py
 ```
 
 ## License 
