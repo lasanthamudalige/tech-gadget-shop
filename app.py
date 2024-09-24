@@ -177,7 +177,7 @@ def login():
     cart = None
     total_items = 0
     # Get current year
-    year = datetime.date.today().year
+    current_year = datetime.date.today().year
 
     if "cart" in session and session["cart"] is not None:
         cart = session["cart"]
@@ -236,7 +236,7 @@ def sign_up():
 
                 user = User.query.filter_by(email=email).first()
 
-                # If the email isn't in the DB create a new user and add it 
+                # If the email isn't in the DB create a new user and add it
                 if user is None:
                     salted_hashed_password = generate_password_hash(password=password, salt_length=16)
                     new_user = User(name=name, email=email, password=salted_hashed_password)
