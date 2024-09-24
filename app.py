@@ -156,6 +156,9 @@ def home():
     cart = None
     total_items = 0
 
+    # Get the current year using datetime
+    current_year = datetime.date.today().year
+
     # If the cart variable in session return the cart and total items in it
     if "cart" in session:
         cart = session["cart"]
@@ -165,7 +168,7 @@ def home():
                 total_items += item["quantity"]
 
     # pass year and current user from the 'load_user' function
-    return render_template("index.html", year=datetime.date.today().year, current_user=current_user, items=items,
+    return render_template("index.html", year=current_year, current_user=current_user, items=items,
                            total_items=total_items, cart=cart)
 
 
@@ -173,6 +176,8 @@ def home():
 def login():
     cart = None
     total_items = 0
+    # Get current year
+    year = datetime.date.today().year
 
     if "cart" in session and session["cart"] is not None:
         cart = session["cart"]
@@ -201,7 +206,7 @@ def login():
             flash("Invalid email address.", category="error")
 
     # Pass less_content variable to render a different footer for this page
-    return render_template("login.html", less_content=True, year=datetime.date.today().year, current_user=current_user,
+    return render_template("login.html", less_content=True, year=current_year, current_user=current_user,
                            total_items=total_items, cart=cart)
 
 
@@ -209,6 +214,9 @@ def login():
 def sign_up():
     cart = None
     total_items = 0
+
+    # Get the current year using datetime
+    current_year = datetime.date.today().year
 
     if "cart" in session and session["cart"] is not None:
         cart = session["cart"]
@@ -249,7 +257,7 @@ def sign_up():
         except EmailNotValidError:
             flash("Invalid email address.", category="error")
 
-    return render_template("sign-up.html", less_content=True, year=datetime.date.today().year,
+    return render_template("sign-up.html", less_content=True, year=current_year,
                            current_user=current_user, total_items=total_items, cart=cart)
 
 
@@ -267,7 +275,10 @@ def logout():
 def admin():
     items = Item.query.all()
 
-    return render_template("admin.html", year=datetime.date.today().year, current_user=current_user, items=items,
+    # Get the current year using datetime
+    current_year = datetime.date.today().year
+
+    return render_template("admin.html", year=current_year, current_user=current_user, items=items,
                            admin=True)
 
 
@@ -275,6 +286,9 @@ def admin():
 @login_required
 @admin_only
 def add_item():
+    # Get the current year using datetime
+    current_year = datetime.date.today().year
+
     if request.method == "POST":
         item_type = request.form.get("product-type")
         item_name = request.form.get("item-name")
@@ -302,7 +316,7 @@ def add_item():
             return redirect("/admin")
 
     # If request method is 'GET'
-    return render_template("add.html", login_page=True, year=datetime.date.today().year, current_user=current_user,
+    return render_template("add.html", login_page=True, year=current_year, current_user=current_user,
                            less_content=True)
 
 
@@ -310,6 +324,9 @@ def add_item():
 @login_required
 @admin_only
 def edit_item(item_id):
+    # Get the current year using datetime
+    current_year = datetime.date.today().year
+
     if request.method == "POST":
         item_type = request.form.get("product-type")
         item_name = request.form.get("item-name")
@@ -343,7 +360,7 @@ def edit_item(item_id):
 
     # For 'GET' requests
     found_item = Item.query.filter_by(id=item_id).first()
-    return render_template("edit.html", less_content=True, year=datetime.date.today().year, current_user=current_user,
+    return render_template("edit.html", less_content=True, year=current_year, current_user=current_user,
                            admin=True, item=found_item)
 
 
@@ -420,6 +437,9 @@ def remove_from_cart(item_id):
 
 @app.route("/checkout")
 def checkout():
+    # Get the current year using datetime
+    current_year = datetime.date.today().year
+
     cart = None
     total_items = 0
     total_amount = 0
@@ -429,7 +449,7 @@ def checkout():
             total_items += item["quantity"]
             total_amount += item["quantity"] * item["price"]
 
-    return render_template("checkout.html", year=datetime.date.today().year, less_content=True, total_items=total_items,
+    return render_template("checkout.html", year=current_year, less_content=True, total_items=total_items,
                            cart=cart, total_amount=round(total_amount, 2), date=datetime.date.today())
 
 
