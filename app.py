@@ -53,7 +53,7 @@ class Item(db.Model):
     category = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    img_url = db.Column(db.String(250))
+    image = db.Column(db.String(250))
 
 
 # Test dataset
@@ -66,8 +66,7 @@ def add_default_data():
                         "combining convenience, immersive sound, and seamless control over music, podcasts, "
                         "and smart home devices, revolutionizing your home interaction.",
             price=199.99,
-            img_url="https://images.pexels.com/photos/14309805/pexels-photo-14309805.jpeg?auto=compress&cs=tinysrgb&w"
-                    "=1260&h=750&dpr=1"
+            image="images/speaker.jpeg"
         )
         db.session.add(item1)
 
@@ -77,8 +76,7 @@ def add_default_data():
             category="popular",
             description="Explore limitless possibilities with edge-to-edge displays and powerful performance.",
             price=899.99,
-            img_url="https://images.pexels.com/photos/207455/pexels-photo-207455.jpeg?auto=compress&cs=tinysrgb&w"
-                    "=1260&h=750&dpr=1"
+            image="images/smartphone.jpeg"
         )
         db.session.add(item2)
 
@@ -88,8 +86,7 @@ def add_default_data():
             category="popular",
             description="Elevate your gaming experience with seamless gameplay and immersive graphics.",
             price=1499.99,
-            img_url="https://images.pexels.com/photos/12300693/pexels-photo-12300693.jpeg?auto=compress&cs=tinysrgb&w"
-                    "=1260&h=750&dpr=1"
+            image="images/laptop.jpeg"
         )
         db.session.add(item3)
 
@@ -99,8 +96,7 @@ def add_default_data():
             category="popular",
             description="Immerse yourself in pristine sound with cutting-edge technology and superior comfort.",
             price=249.99,
-            img_url="https://images.pexels.com/photos/7241360/pexels-photo-7241360.jpeg?auto=compress&cs=tinysrgb&w"
-                    "=1260&h=750&dpr=1"
+            image="images/headphones.jpeg"
         )
         db.session.add(item4)
 
@@ -111,8 +107,7 @@ def add_default_data():
             description="Stay active and track your fitness goals with a sleek smartwatch that keeps you connected "
                         "and motivated.",
             price=129.99,
-            img_url="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w"
-                    "=1260&h=750&dpr=1"
+            image="images/smartwatch.jpeg"
         )
         db.session.add(item5)
 
@@ -123,8 +118,7 @@ def add_default_data():
             description="Experience style and functionality on the go with a portable tablet that offers a stunning "
                         "display and powerful performance.",
             price=399.99,
-            img_url="https://images.pexels.com/photos/6373018/pexels-photo-6373018.jpeg?auto=compress&cs=tinysrgb&w"
-                    "=1260&h=750&dpr=1"
+            image="images/tablet.jpeg"
         )
         db.session.add(item6)
 
@@ -132,7 +126,7 @@ def add_default_data():
 
 
 # Run once to create a db
-# with app.app_context():  # From SQLAlchemy 3.0
+#with app.app_context():  # From SQLAlchemy 3.0
 #     db.create_all()
 #     add_default_data()
 
@@ -168,8 +162,21 @@ def home():
                 total_items += item["quantity"]
 
     # pass year and current user from the 'load_user' function
-    return render_template("index.html", year=current_year, current_user=current_user, items=items,
-                           total_items=total_items, cart=cart)
+    return render_template("index.html", year=current_year, items=items, total_items=total_items, cart=cart)
+
+
+@app.route("/privacy-policy")
+def privacy_policy():
+    current_year = datetime.date.today().year
+
+    return render_template("privacy-policy.html", year=current_year, current_user=current_user, hide_userinfo=True)
+
+
+@app.route("/terms-of-service")
+def terms_of_service():
+    current_year = datetime.date.today().year
+
+    return render_template("terms-of-service.html", year=current_year, current_user=current_user, hide_userinfo=True)
 
 
 @app.route("/login", methods=["Get", "POST"])
@@ -282,7 +289,7 @@ def admin():
                            admin=True)
 
 
-@app.route("/add_item", methods=["Get", "POST"])
+@app.route("/add-item", methods=["Get", "POST"])
 @login_required
 @admin_only
 def add_item():

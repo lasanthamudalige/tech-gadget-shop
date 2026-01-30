@@ -7,8 +7,7 @@ endblock %} {% block main %}
       <div class="col-md-6 offset-md-3">
         {% for item in items %} {% if item.category == "featured" %}
         <div class="card py-4">
-          <img
-            src="{{ item.img_url}}"
+	<img src="{{ url_for('static', filename=item.image) }}"
             class="card-img-top w-50 align-self-center"
             alt="{{ item.name }}"
           />
@@ -36,8 +35,7 @@ endblock %} {% block main %}
       {% for item in items %} {% if item.category == "popular" %}
       <div class="col-md-3 py-2">
         <div class="card">
-          <img
-            src="{{ item.img_url}}"
+          <img src="{{ url_for('static', filename=item.image) }}"
             class="card-img-top align-self-center p-2"
             alt="Smartphone"
           />
