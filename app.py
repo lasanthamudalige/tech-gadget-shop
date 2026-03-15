@@ -402,14 +402,14 @@ def add_to_cart(item_id, return_to_checkout):
                     item.update({"quantity": new_quantity})
             # Else add that item as a new item
             if not found:
-                cart.append({"id": product.id, "name": product.name, "image": product.img_url, "price": product.price,
+                cart.append({"id": product.id, "name": product.name, "image": f"/static/{product.image}", "price": product.price,
                              "quantity": 1})
             session["cart"] = cart
         # If there is no cart in the session create one and add an item to it
         else:
             session["cart"] = []
             session["cart"].append(
-                {"id": product.id, "name": product.name, "image": product.img_url, "price": product.price,
+                {"id": product.id, "name": product.name, "image": f"/static/{product.image}", "price": product.price,
                  "quantity": 1})
 
             # Redirect the user according the page where user add new items to the cart
@@ -463,6 +463,9 @@ def checkout():
 # Checkout session for Stripe
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
+
+    BASE_URL = "https://lasantha.pythonanywhere.com"
+
     try:
         line_items = []
         #  Create a line item for each item in the cart
@@ -471,21 +474,22 @@ def create_checkout_session():
                 "price_data": {
                     "currency": "usd",
                     "product_data": {"name": item["name"],
-                                     "images": [item["image"]]
+                                     "images": [f"{BASE_URL}{item['image']}"] # join the base url+image file in the static folder
                                      },
                     "unit_amount_decimal": item["price"] * 100,
                 },
                 "quantity": item["quantity"],
             }
             line_items.append(line_item)
+            print(line_items)
 
         checkout_session = stripe.checkout.Session.create(
             line_items=line_items,
             mode='payment',
             billing_address_collection="required",
             # Redirect the user to relevant page after the payment
-            success_url="http://127.0.0.1:5000/success",
-            cancel_url="http://127.0.0.1:5000/"
+            success_url= f"{BASE_URL}/success",
+            cancel_url= f"{BASE_URL}"
         )
         return redirect(checkout_session.url, code=303)
     except Exception as e:
