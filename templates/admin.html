@@ -7,11 +7,7 @@ Paradise{% endblock %} {% block main %}
       <div class="col-md-6 offset-md-3">
         {% for item in items %} {% if item.category == "featured" %}
         <div class="card py-4">
-          <img
-            src="{{ item.img_url}}"
-            class="card-img-top w-50 align-self-center"
-            alt="{{ item.name }}"
-          />
+          <img src="{{ url_for('static', filename=item.image) }}" class="img-fluid" alt="{{ item.name}}">
           <div class="card-body text-center">
             <h3 class="card-title">{{ item.name }}</h3>
             <p class="card-text">{{ item.description }}</p>
@@ -57,12 +53,8 @@ Paradise{% endblock %} {% block main %}
       {% for item in items %} {% if item.category == "popular" %}
       <div class="col-md-3 py-2">
         <div class="card">
-          <img
-            src="{{ item.img_url}}"
-            class="card-img-top align-self-center p-2"
-            alt="{{ item.name }}"
-          />
-          <div class="card-body">
+         <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name}}">
+         <div class="card-body">
             <h3 class="card-title">{{ item.name }}</h3>
             <p class="card-text">{{ item.description }}</p>
             <h4 class="card-price">${{ item.price }}</h4>
